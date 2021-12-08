@@ -1,0 +1,23 @@
+module.exports = {
+  root: false,
+  extends: '@react-native-community',
+  rules: {
+    'prettier/prettier': 0,
+    'react-native/no-inline-styles': 0,
+    'no-unused-vars': 0,
+    'react/display-name': 0,
+    'react/jsx-boolean-value': [0, 'always'],
+    'react/jsx-curly-spacing': 1,
+    'react/jsx-no-duplicate-props': 1,
+    'react/jsx-no-undef': 1,
+    'react/jsx-sort-prop-types': 0,
+    'react/jsx-sort-props': 0,
+    'react/self-closing-comp': 0,
+    'react-hooks/exhaustive-deps': 0,
+    'no-shadow': 0,
+    'no-dupe-keys': 0,
+    'curly': 0,
+    'quotes': 0,
+    'radix': 0,
+  },
+};
