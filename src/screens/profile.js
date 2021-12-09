@@ -9,7 +9,7 @@ import {
     Image,
     TouchableOpacity,
 } from 'react-native';
-import {TabView, TabBar, SceneMap} from 'react-native-tab-view';
+
 import HeaderComponent from '../components/HeaderComponent';
 import DataService from '../services/dataService';
 import LinearGradient from 'react-native-linear-gradient';
@@ -317,7 +317,7 @@ class ProfilePage extends Component {
                         <View style={styles.dashBoardCard}>
                             <Image
                                 style={styles.userImg}
-                                source={require('../images/user.jpg')}
+                                source={require('../assets/user.jpg')}
                             />
                             <Text style={styles.userName}>
                                 {this.state.dataSource.fullname}
@@ -331,12 +331,12 @@ class ProfilePage extends Component {
                     </LinearGradient>
                 </View>
                 <View style={{flex: 6}}>
-                    <TabView
+                    {/* <TabView
                         navigationState={this.state}
                         renderScene={this._renderScene}
                         renderTabBar={this._renderTabBar}
                         onIndexChange={this._handleIndexChange}
-                    />
+                    /> */}
                 </View>
             </View>
         );

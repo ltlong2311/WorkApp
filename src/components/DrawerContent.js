@@ -120,7 +120,7 @@ export const DrawerContent = props => {
                         }}
                     />
                 </Drawer.Section>
-                <Drawer.Section title="Khác">
+                <Drawer.Section title="Other">
                     <DrawerItem
                         icon={({color, size}) => (
                             <MaterialCommunityIcons
@@ -129,7 +129,7 @@ export const DrawerContent = props => {
                             size={size}
                           />
                         )}
-                        label="Tài khoản"
+                        label="Account"
                         onPress={() => {
                             props.navigation.navigate('User', {
                                 screen: 'UserProfile',
@@ -144,7 +144,7 @@ export const DrawerContent = props => {
                                 size={size}
                             />
                         )}
-                        label="Trợ giúp"
+                        label="Support"
                         onPress={() => {}}
                     />
                 </Drawer.Section>

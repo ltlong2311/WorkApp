@@ -110,6 +110,7 @@ class TaskList extends Component {
                     title="Task List"
                     add="true"
                     next="AddTask"
+                    goBack="Dashboard"
                     navigation={this.props.navigation}
                 />
                 <View style={styles.tabView}>

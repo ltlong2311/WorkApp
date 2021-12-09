@@ -48,7 +48,6 @@ const LoginPage = ({navigation}) => {
         navigation.navigate('RegisterPage');
     };
 
-
     return (
         <View style={styles.container}>
             <StatusBar
@@ -92,7 +91,9 @@ const LoginPage = ({navigation}) => {
                                 setDataLogin({...dataLogin, password: password})
                             }
                         />
-                        <TouchableOpacity onPress={updateSecureTextEntry}>
+                        <TouchableOpacity
+                            onPress={updateSecureTextEntry}
+                            style={{paddingRight: 10}}>
                             {secureTextEntry ? (
                                 <MaterialCommunityIcons
                                     name="eye-off"

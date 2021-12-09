@@ -848,13 +848,13 @@ class DataService extends React.Component {
         list = [
             {
                 project_title: 'Office Management',
-                start_date: '2018-06-12',
-                due_date: '2018-12-31',
+                start_date: '2021-06-12',
+                due_date: '2021-12-31',
                 progress: '10',
                 assign_lead: '1',
                 assign_to: 'a:3:{i:0;s:1:"1";i:1;s:1:"3";i:2;s:1:"9";}',
                 estimate_hours: '350.00',
-                project_created: '2018-06-12',
+                project_created: '2021-06-12',
                 tasks: [
                     {
                         task_detail: {
@@ -863,7 +863,7 @@ class DataService extends React.Component {
                             task_name: 'Patient appointment booking ',
                             estimated_hours: '12.00',
                             description: 'test',
-                            task_progress: '0',
+                            task_progress: '100',
                             start_date: '2018-11-28',
                             due_date: '2018-11-29',
                             user_id: '1',

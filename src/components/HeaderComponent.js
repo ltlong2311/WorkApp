@@ -4,7 +4,9 @@ import {
     ActivityIndicator,
     StyleSheet,
     Dimensions,
+    Button,
     SafeAreaView,
+    TouchableOpacity,
     Text,
     Image,
 } from 'react-native';
@@ -12,8 +14,18 @@ import LinearGradient from 'react-native-linear-gradient';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../consts/color';
+import {DrawerActions} from '@react-navigation/native';
 
-const HeaderComponent = ({navigation, title}) => {
+const HeaderComponent = ({
+    navigation,
+    title,
+    back,
+    add,
+    edit,
+    next,
+    data,
+    goBack,
+}) => {
     return (
         <SafeAreaView>
             <LinearGradient
@@ -21,12 +33,28 @@ const HeaderComponent = ({navigation, title}) => {
                 end={{x: 1, y: 0}}
                 colors={['#44bbec', '#38c3fc']}
                 style={styles.header}>
-                <MaterialIcons
-                    name="arrow-back-ios"
-                    size={23}
-                    color={COLORS.white}
-                    onPress={navigation.goBack}
-                />
+                {back ? (
+                    <MaterialIcons
+                        name="arrow-back-ios"
+                        size={23}
+                        color={COLORS.white}
+                        onPress={
+                            goBack
+                                ? () => navigation.navigate(goBack)
+                                : navigation.goBack
+                        }
+                    />
+                ) : (
+                    <MaterialIcons
+                        onPress={() =>
+                            navigation.dispatch(DrawerActions.openDrawer())
+                        }
+                        name="menu"
+                        size={28}
+                        color={COLORS.white}
+                    />
+                )}
+
                 <Text
                     style={{
                         color: COLORS.white,
@@ -35,11 +63,30 @@ const HeaderComponent = ({navigation, title}) => {
                     }}>
                     {title}
                 </Text>
-                <MaterialCommunityIcons
-                    name="plus"
-                    size={28}
-                    color={COLORS.white}
-                />
+
+                {edit ? (
+                    <Button
+                        transparent
+                        onPress={() => navigation.navigate(next)}>
+                        <View>
+                            <Image
+                                style={styles.editIcon}
+                                source={require('../assets/edit.png')}
+                            />
+                        </View>
+                    </Button>
+                ) : add ? (
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate(next, {data: data})}>
+                        <MaterialCommunityIcons
+                            name="plus"
+                            size={28}
+                            color={COLORS.white}
+                        />
+                    </TouchableOpacity>
+                ) : (
+                    <View></View>
+                )}
             </LinearGradient>
         </SafeAreaView>
     );

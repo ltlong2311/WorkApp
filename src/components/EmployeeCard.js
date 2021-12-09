@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
+import {View, Text, Image, StyleSheet, Alert} from 'react-native';
 import {TouchableOpacity} from 'react-native';
-import {View, Text, Image, FlatList, StyleSheet, Alert} from 'react-native';
 import CardView from 'react-native-cardview';
 import {
     MenuProvider,
@@ -9,24 +9,13 @@ import {
     MenuOptions,
     MenuOption,
 } from 'react-native-popup-menu';
-import HeaderComponent from '../components/HeaderComponent';
 
-import DataService from '../services/dataService';
-
-const data = new Array(100)
-    .fill(0)
-    .map((a, i) => ({key: '' + i, value: 'item' + i}));
-
-const EmployeeList = ({navigation}) => {
-    const [dataSource, setDataSource] = useState(DataService.employeeList());
-    const [isLoading, setIsLoading] = useState(true);
-
+const EmployeeCard = ({item, navigation}) => {
     const openProfile = () => {
         navigation.navigate('Profile');
     };
 
-    const _keyExtractor = (item, index) => item.id;
-    const _renderItem = ({item}) => (
+    return (
         <View style={styles.cardView}>
             <TouchableOpacity style={styles.card} onPress={openProfile}>
                 <View>
@@ -94,33 +83,9 @@ const EmployeeList = ({navigation}) => {
             </TouchableOpacity>
         </View>
     );
-
-    return (
-        <MenuProvider style={styles.container}>
-            <View style={styles.container}>
-                <HeaderComponent
-                    back="true"
-                    title="Employee List"
-                    add="true"
-                    next="AddEmployee"
-                    goBack="Dashboard"
-                    navigation={navigation}
-                />
-                <FlatList
-                    data={dataSource}
-                    initialNumToRender={1}
-                    maxToRenderPerBatch={1}
-                    removeClippedSubviews={false}
-                    numColumns={2}
-                    keyExtractor={_keyExtractor}
-                    renderItem={_renderItem}
-                />
-            </View>
-        </MenuProvider>
-    );
 };
 
-export default EmployeeList;
+export default EmployeeCard;
 
 const styles = StyleSheet.create({
     container: {
@@ -168,10 +133,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    moreIcon: {
-        width: 14,
-        height: 14,
-    },
     navBar: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -189,10 +150,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingRight: 10,
     },
-    rightIcon: {
-        height: 10,
-        width: 10,
-        resizeMode: 'contain',
-        backgroundColor: 'white',
+    moreIcon: {
+        width: 14,
+        height: 14,
     },
 });

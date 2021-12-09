@@ -17,23 +17,21 @@ import RegisterPage from './src/screens/register';
 import EmployeeList from './src/screens/employeeList';
 import EditProject from './src/screens/editProject';
 
-
 //navigation
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer, LightTheme} from '@react-navigation/native';
 import DrawerNavigator from './src/navigation/DrawerNavigator';
 import TaskView from './src/screens/taskView';
 import TaskList from './src/screens/taskList';
+import CreateProject from './src/screens/createProject';
+import ProfilePage from './src/screens/profile';
 
 const Stack = createStackNavigator();
 
 const App = () => {
     return (
         <NavigationContainer style={[styles.container]} theme={LightTheme}>
-            <StatusBar
-                translucent
-                backgroundColor="transparent"
-            />
+            <StatusBar translucent backgroundColor="transparent" />
             <Stack.Navigator screenOptions={{headerShown: false}}>
                 <Stack.Screen name="Login" component={LoginPage} />
                 <Stack.Screen name="Home" component={DrawerNavigator} />
@@ -44,6 +42,8 @@ const App = () => {
                 <Stack.Screen name="TaskList" component={TaskList} />
                 <Stack.Screen name="TaskView" component={TaskView} />
                 <Stack.Screen name="EditProject" component={EditProject} />
+                <Stack.Screen name="CreateProject" component={CreateProject} />
+                <Stack.Screen name="Profile" component={ProfilePage} />
             </Stack.Navigator>
         </NavigationContainer>
     );

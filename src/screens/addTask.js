@@ -10,17 +10,12 @@ import {
     ScrollView,
     Platform,
 } from 'react-native';
-// import {
-//     Form,
-//     Item,
-//     Input,
-//     Label,
-// } from 'native-base';
+// import { Container, Header, Content, Form, Item, Input, Label, DatePicker } from 'native-base';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import Loading from '../components/loading';
-import HeaderComponent from '../components/HeaderComponent';
-import DataService from '../services/dataService';
+import HeaderComponent from '../components/Header';
 
-export default class EditProject extends Component {
+export default class AddTask extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -28,39 +23,13 @@ export default class EditProject extends Component {
             password: '',
             toggle: false,
         };
-        this.state.dataSource = DataService.projectList();
-        this.state.dataSource = this.state.dataSource[0];
     }
 
     toggleSwitch1 = value => {
         this.setState({toggle: value});
     };
 
-    isLead = () => {
-        if (this.state.toggle) {
-            return (
-                <></>
-                // <Item floatingLabel>
-                //     <Label style={styles.loginLabel}>Fixed Price</Label>
-                //     <Input
-                //         value={this.state.dataSource.overviews.fixed_price}
-                //     />
-                // </Item>
-            );
-        } else {
-            return (
-                <></>
-                // <Item floatingLabel>
-                //     <Label style={styles.loginLabel}>Hourly Rate</Label>
-                //     <Input
-                //         value={this.state.dataSource.overviews.hourly_rate}
-                //     />
-                // </Item>
-            );
-        }
-    };
-
-    editProjects = () => {
+    addTask = () => {
         this.props.navigation.pop();
     };
 
@@ -69,65 +38,55 @@ export default class EditProject extends Component {
             <View style={styles.container}>
                 <HeaderComponent
                     back="true"
-                    title="Edit Project"
+                    title="Create Task"
                     noIcon="true"
                     navigation={this.props.navigation}
                 />
                 <ScrollView>
-                    {/* <Form style={{paddingRight: 15}}>
+                    {/* <Form style={{ paddingRight: 15 }}>
+
                         <Item floatingLabel>
-                            <Label style={styles.loginLabel}>
-                                Project Code
-                            </Label>
-                            <Input
-                                value={
-                                    this.state.dataSource.overviews.project_code
-                                }
-                            />
+                            <Label style={styles.loginLabel}>Task Title</Label>
+                            <Input />
                         </Item>
+
                         <Item floatingLabel>
-                            <Label style={styles.loginLabel}>
-                                Project Title
-                            </Label>
-                            <Input
-                                value={
-                                    this.state.dataSource.overviews
-                                        .project_title
-                                }
-                            />
+                            <Label style={styles.loginLabel}>Assign To</Label>
+                            <Input />
                         </Item>
-                        <Item floatingLabel>
-                            <Label style={styles.loginLabel}>Fixed Rate</Label>
-                            <Input value={this.state.dataSource.overviews.fixed_price} />
-                        </Item>
-                        <View style={styles.container}>
-                            <Switch
-                                onValueChange={this.toggleSwitch1}
-                                value={this.state.toggle}
+                        <Text style={[styles.loginLabel, { textAlign: 'left', marginTop: 15, marginLeft: 15 }]}>Start Date</Text>
+                        <View style={[styles.container, { marginLeft: 15 }]}>
+                            <DatePicker
+                                locale={"en"}
+                                modalTransparent={false}
+                                animationType={"fade"}
+                                androidMode={"default"}
+                                placeHolderText="Select date"
+                                textStyle={{ color: "#000000" }}
+                                placeHolderTextStyle={{ color: "#000000", fontSize: 14 }}
+                                disabled={false}
                             />
                         </View>
-                        {this.isLead()}
                         <Item floatingLabel>
-                            <Label style={styles.loginLabel}>
-                                Estimated Hours
-                            </Label>
-                            <Input
-                                value={this.state.dataSource.estimated_hours}
-                            />
+                            <Label style={styles.loginLabel}>Estimated Hours</Label>
+                            <Input />
                         </Item>
                         <Item floatingLabel>
                             <Label style={styles.loginLabel}>Description</Label>
-                            <Input
-                                value={
-                                    this.state.dataSource.overviews.description
-                                }
-                            />
+                            <Input />
                         </Item>
+                        <Text style={[styles.loginLabel, { textAlign: 'left', margin: 15 }]}>Fixed Price</Text>
+                        <View style={styles.container}>
+                            <Switch
+                                onValueChange={this.toggleSwitch1}
+                                value={this.state.toggle} />
+                        </View>
                     </Form>
                     <TouchableHighlight
                         style={[styles.buttonContainer, styles.loginButton]}
-                        onPress={() => this.editProjects()}>
-                        <Text style={styles.loginText}>Edit Project</Text>
+                        onPress={() => this.addTask()}
+                    >
+                        <Text style={styles.loginText}>Create Task</Text>
                     </TouchableHighlight> */}
                 </ScrollView>
             </View>

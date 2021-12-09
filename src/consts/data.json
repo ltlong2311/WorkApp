@@ -1,0 +1,231 @@
+{
+    "project_title": "Office Management",
+    "start_date": "2021-06-12",
+    "due_date": "2021-12-31",
+    "progress": "10",
+    "assign_lead": "1",
+    "assign_to": "a:3:{i:0;s:1:\"1\";i:1;s:1:\"3\";i:2;s:1:\"9\";}",
+    "estimate_hours": "350.00",
+    "project_created": "2021-06-12",
+    "tasks": [
+      {
+        "task_detail": {
+          "t_id": "28",
+          "assigned_to": "s:3:\"2,3\";",
+          "task_name": "Patient appointment booking ",
+          "estimated_hours": "12.00",
+          "description": "test",
+          "task_progress": "100",
+          "start_date": "2018-11-28",
+          "due_date": "2018-11-29",
+          "user_id": "1",
+          "fullname": "Administrator",
+          "avatar": "blue-cd-vector-technology.jpg",
+          "start_time": "0",
+          "end_time": "0"
+        },
+        "task_comment": [
+          {
+            "comment_id": "26",
+            "project": "1",
+            "task_id": "28",
+            "posted_by": "1",
+            "message": "",
+            "date_posted": "0000-00-00 00:00:00",
+            "deleted": "No",
+            "client_id": null,
+            "unread": "1"
+          }
+        ],
+        "task_files": [],
+        "assigned_to": []
+      },
+      {
+        "task_detail": {
+          "t_id": "26",
+          "assigned_to": "N;",
+          "task_name": "Appointment booking with payment gateway ",
+          "estimated_hours": "4.00",
+          "description": "",
+          "task_progress": "100",
+          "start_date": "2018-11-24",
+          "due_date": "2018-11-24",
+          "user_id": "2",
+          "fullname": "Steve Smith",
+          "avatar": "user-06.jpg",
+          "start_time": "0",
+          "end_time": "0"
+        },
+        "task_comment": [],
+        "task_files": [],
+        "assigned_to": []
+      },
+      {
+        "task_detail": {
+          "t_id": "1",
+          "assigned_to": "N;",
+          "task_name": "Patient and Doctor video conferencing",
+          "estimated_hours": "2.00",
+          "description": "",
+          "task_progress": "100",
+          "start_date": "2018-05-29",
+          "due_date": "2018-05-29",
+          "user_id": "0",
+          "fullname": "0",
+          "avatar": "0",
+          "start_time": "1527138689",
+          "end_time": "1527139199"
+        },
+        "task_comment": [
+          {
+            "comment_id": "3",
+            "project": "1",
+            "task_id": "1",
+            "posted_by": "1",
+            "message": "",
+            "date_posted": "2018-08-27",
+            "deleted": "No",
+            "client_id": null,
+            "unread": "1"
+          },
+          {
+            "comment_id": "19",
+            "project": "1",
+            "task_id": "1",
+            "posted_by": "1",
+            "message": "<p>completed</p>",
+            "date_posted": "0000-00-00",
+            "deleted": "No",
+            "client_id": null,
+            "unread": "1"
+          }
+        ],
+        "task_files": [],
+        "assigned_to": []
+      }
+    ],
+    "tasks_open": [
+      {
+        "t_id": "26",
+        "task_name": "Appointment booking with payment gateway ",
+        "project": "1",
+        "milestone": "0",
+        "assigned_to": "N;",
+        "description": "The usability study methodologies for evaluating UI versus content are fairly similar. However, there are nuances to the methodologies that are worth considering when the primary goal of the usability study is evaluating digital copy.",
+        "visible": "Yes",
+        "task_progress": "0",
+        "timer_status": "Off",
+        "timer_started_by": null,
+        "start_time": null,
+        "estimated_hours": "0.00",
+        "logged_time": "0",
+        "auto_progress": "FALSE",
+        "start_date": "2018-05-24",
+        "due_date": "2018-05-31",
+        "pinned": "0",
+        "date_added": "2018-05-24",
+        "added_by": "5"
+      },
+      {
+        "t_id": "28",
+        "task_name": "test",
+        "project": "1",
+        "milestone": null,
+        "assigned_to": "s:3:\"2,3\";",
+        "description": "test",
+        "visible": "No",
+        "task_progress": "0",
+        "timer_status": "Off",
+        "timer_started_by": null,
+        "start_time": null,
+        "estimated_hours": "12.00",
+        "logged_time": "0",
+        "auto_progress": "FALSE",
+        "start_date": "2018-11-28",
+        "due_date": "2018-11-29",
+        "pinned": "0",
+        "date_added": "2018-11-28",
+        "added_by": "1"
+      }
+    ],
+    "tasks_completed": [
+      {
+        "t_id": "28",
+        "task_name": "Patient appointment booking",
+        "project": "1",
+        "milestone": "0",
+        "assigned_to": "N;",
+        "description": "",
+        "visible": "No",
+        "task_progress": "100",
+        "timer_status": "Off",
+        "timer_started_by": null,
+        "start_time": null,
+        "estimated_hours": "2.00",
+        "logged_time": "510",
+        "auto_progress": "FALSE",
+        "start_date": "2018-05-29",
+        "due_date": "2018-05-29",
+        "pinned": "0",
+        "date_added": "2018-05-23",
+        "added_by": "4"
+      },
+      {
+        "t_id": "1",
+        "task_name": "Patient and Doctor video conferencing",
+        "project": "1",
+        "milestone": "0",
+        "assigned_to": "N;",
+        "description": "The usability study methodologies for evaluating UI versus content are fairly similar. However, there are nuances to the methodologies that are worth considering when the primary goal of the usability study is evaluating digital copy.",
+        "visible": "Yes",
+        "task_progress": "100",
+        "timer_status": "Off",
+        "timer_started_by": null,
+        "start_time": null,
+        "estimated_hours": "0.00",
+        "logged_time": "0",
+        "auto_progress": "FALSE",
+        "start_date": "2018-05-24",
+        "due_date": "2018-05-24",
+        "pinned": "0",
+        "date_added": "2018-05-24 02:56:23",
+        "added_by": "5"
+      }
+    ],
+    "tasks_files_count": 0,
+    "comment_count": 6,
+    "overviews": {
+      "project_id": "1",
+      "project_code": "PRO29673",
+      "project_title": "Office Management",
+      "deadline": "2018-12-31",
+      "project_created": "2018-06-12 04:57:39",
+      "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. When an unknown printer took a galley of type and scrambled it...",
+      "progress": "10",
+      "fixed_rate": "No",
+      "hourly_rate": "15.00",
+      "fixed_price": "0.00",
+      "client": "1",
+      "client_name": "thomas tech ",
+      "leadid": "1",
+      "project_lead_name": "Administrator",
+      "project_lead_photo": "http://www.newhrms.com/assets/uploads/blue-cd-vector-technology.jpg",
+      "project_team_members": [
+        {
+          "user_id": "1",
+          "fullname": "Administrator",
+          "avatar": "blue-cd-vector-technology.jpg"
+        },
+        {
+          "user_id": "3",
+          "fullname": "Smith",
+          "avatar": "default_avatar.jpg"
+        },
+        {
+          "user_id": "9",
+          "fullname": "John",
+          "avatar": "default_avatar.jpg"
+        }
+      ]
+    }
+  }

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {TouchableOpacity, TouchableHighlight} from 'react-native';
 import {View, Text, Image, StyleSheet, Dimensions, Alert} from 'react-native';
 import CardView from 'react-native-cardview';
@@ -7,19 +7,45 @@ import DataService from '../services/dataService';
 import {SwipeListView} from 'react-native-swipe-list-view';
 import ProgressBarAnimated from 'react-native-progress-bar-animated';
 
+import {db} from '../../firebaseConnect';
+import {collection, getDocs} from 'firebase/firestore/lite';
+
 const ProjectList = ({navigation}) => {
-    const [dataSource, setDataSource] = useState(DataService.projectList());
+    // const [dataSource, setDataSource] = useState(DataService.projectList());
+    const [dataSource, setDataSource] = useState([]);
     const [progressCustomStyles, setProgressCustomStyles] = useState({
         backgroundColor: '#44bbec',
         borderRadius: 0,
         borderColor: '#fff',
     });
     const [isLoading, setIsLoading] = useState(true);
+    var opentasks = 0;
+    var completedtasks = 0;
     dataSource.forEach((value, key) => {
-        dataSource[key].opentasks = value.tasks_open.length;
-        dataSource[key].completedtasks = value.tasks_completed.length;
+        dataSource[key].opentasks = 0;
+        dataSource[key].completedtasks = 0;
+        dataSource[key].task.forEach((val, k) => {
+            if (val.task_detail.task_progress === 100) {
+                dataSource[key].completedtasks++;
+            } else {
+                dataSource[key].opentasks++;
+            }
+            console.log('val', val);
+        });
+        // console.log('value', value);
     });
+    useEffect(() => {
+        GetData();
+    }, []);
 
+    const GetData = async () => {
+        const projectCol = collection(db, 'projectList');
+        const projectSnapshot = await getDocs(projectCol);
+        const projectList = projectSnapshot.docs.map(doc => doc.data());
+        setDataSource(projectList);
+    };
+
+    // console.log('data', dataSource);
     const barWidth = Dimensions.get('screen').width - 30;
 
     const openProjectView = project => {
@@ -44,7 +70,8 @@ const ProjectList = ({navigation}) => {
                     <CardView
                         style={styles.cardData}
                         cardElevation={2}
-                        cardMaxElevation={2}>
+                        cardMaxElevation={2}
+                        useNativeDriver={false}>
                         <View style={styles.navBar}>
                             <View style={styles.leftContainer}>
                                 <Text
@@ -62,7 +89,7 @@ const ProjectList = ({navigation}) => {
                                     {textAlign: 'left'},
                                     styles.invoiceCompany,
                                 ]}>
-                                {item.opentasks} open tasks,
+                                {item.opentasks} in progress tasks,
                                 {item.completedtasks} tasks completed
                             </Text>
                         </View>
@@ -93,17 +120,7 @@ const ProjectList = ({navigation}) => {
                                     style={[
                                         {textAlign: 'right'},
                                         styles.calendarText,
-                                    ]}>
-                                    <Image
-                                        style={styles.projectIcon}
-                                        source={require('../assets/attach.png')}></Image>
-                                    &nbsp;{item.tasks_files_count}
-                                    &nbsp;&nbsp;
-                                    <Image
-                                        style={styles.projectIcon}
-                                        source={require('../assets/bubble.png')}></Image>
-                                    &nbsp;{item.comment_count}
-                                </Text>
+                                    ]}></Text>
                             </View>
                         </View>
                     </CardView>
@@ -118,8 +135,10 @@ const ProjectList = ({navigation}) => {
                 back="true"
                 title="Project List"
                 add="true"
+                goBack="Dashboard"
                 next="CreateProject"
                 navigation={navigation}
+                data=""
             />
             <SwipeListView
                 useFlatList
@@ -127,6 +146,7 @@ const ProjectList = ({navigation}) => {
                 keyExtractor={_keyExtractor}
                 renderItem={_renderItem}
                 maxToRenderPerBatch={1}
+                useNativeDriver={true}
                 renderHiddenItem={(data, rowMap) => (
                     <View style={styles.rowBack}>
                         <TouchableOpacity

@@ -9,6 +9,7 @@ import {
     KeyboardAvoidingView,
     ScrollView,
     Platform,
+    Alert,
 } from 'react-native';
 // import {signInWithEmailAndPassword} from '@firebase/auth';
 import {authentication} from '../../firebaseConnect';
@@ -53,6 +54,7 @@ export default class RegisterPage extends Component {
             .then(res => {
                 console.log(res);
                 this.hideLoading();
+                Alert.alert('Message', 'Register successfully');
                 this.props.navigation.navigate('Dashboard');
             })
             .catch(error => {

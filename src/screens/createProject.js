@@ -1,40 +1,55 @@
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import {
     StyleSheet,
     Text,
     View,
-    TextInput,
-    TouchableHighlight,
-    Image,
-    Switch,
     ScrollView,
+    Button,
+    Input,
     Platform,
+    Alert,
 } from 'react-native';
-// import {
-//     Form,
-//     Item,
-//     Input,
-//     Label,
-//     DatePicker,
-// } from 'native-base';
+// import {Input} from 'native-base';
 import Loading from '../components/loading';
 import HeaderComponent from '../components/HeaderComponent';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import {db} from '../../firebaseConnect';
+import {doc, setDoc} from 'firebase/firestore/lite';
 
-export default class CreateProject extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            email: '',
-            password: '',
-            toggle: false,
-        };
-    }
+const CreateProject = ({navigation}) => {
+    const [dataLogin, setDataLogin] = useState({
+        email: '',
+        password: '',
+    });
+    const [toggle, setToggle] = useState(false);
 
-    toggleSwitch1 = value => {
-        this.setState({toggle: value});
+    const random = Math.random().toString(36).substr(2, 11);
+
+    const handleCreateProject = async () => {
+        await setDoc(doc(db, 'projectList', random), {
+            project_title: 'abc',
+            assign_lead: '1',
+            start_date: '2021-12-06',
+            due_date: '2021-12-31',
+            progress: 0,
+            project_created: '',
+            estimate_hours: 350,
+            task: [],
+        });
     };
-    isLead = () => {
-        if (this.state.toggle) {
+
+    const onCreateProject = () => {
+        handleCreateProject();
+        Alert.alert('Message', 'Deleted successfully');
+        navigation.push('ProjectList');
+        // navigation.pop();
+    };
+
+    const toggleSwitch1 = value => {
+        setToggle(value);
+    };
+    const isLead = () => {
+        if (toggle) {
             return (
                 <></>
                 // <Item floatingLabel>
@@ -53,27 +68,22 @@ export default class CreateProject extends Component {
         }
     };
 
-    addProjects = () => {
-        this.props.navigation.pop();
+    const addProjects = () => {
+        navigation.pop();
     };
 
-    render() {
-        return (
-            <View style={styles.container}>
-                <HeaderComponent
-                    back="true"
-                    title="Create Project"
-                    noIcon="true"
-                    navigation={this.props.navigation}
-                />
-                <ScrollView>
-                    {/* <Form style={{paddingRight: 15}}>
-                        <Item floatingLabel>
-                            <Label style={styles.loginLabel}>
-                                Project Code
-                            </Label>
-                            <Input />
-                        </Item>
+    return (
+        <View style={styles.container}>
+            <HeaderComponent
+                back="true"
+                title="Create Project"
+                noIcon="true"
+                navigation={navigation}
+            />
+            <ScrollView>
+                <View style={{paddingRight: 15}}></View>
+                <Button title="create" onPress={onCreateProject} />
+                {/* <Form style={{paddingRight: 15}}>
                         <Item floatingLabel>
                             <Label style={styles.loginLabel}>
                                 Project Title
@@ -148,11 +158,12 @@ export default class CreateProject extends Component {
                         onPress={() => this.addProjects()}>
                         <Text style={styles.loginText}>Create Project</Text>
                     </TouchableHighlight> */}
-                </ScrollView>
-            </View>
-        );
-    }
-}
+            </ScrollView>
+        </View>
+    );
+};
+
+export default CreateProject;
 
 const styles = StyleSheet.create({
     container: {
