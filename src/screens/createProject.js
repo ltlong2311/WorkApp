@@ -6,35 +6,101 @@ import {
     ScrollView,
     Button,
     Input,
+    TouchableOpacity,
+    // TextInput,
     Platform,
     Alert,
 } from 'react-native';
 // import {Input} from 'native-base';
+import {TextInput} from 'react-native-paper';
 import Loading from '../components/loading';
 import HeaderComponent from '../components/HeaderComponent';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {db} from '../../firebaseConnect';
 import {doc, setDoc} from 'firebase/firestore/lite';
 
-const CreateProject = ({navigation}) => {
-    const [dataLogin, setDataLogin] = useState({
-        email: '',
-        password: '',
-    });
-    const [toggle, setToggle] = useState(false);
+const convertDateToString = (date, mode) => {
+    let year = date.getFullYear();
+    let month = (1 + date.getMonth()).toString().padStart(2, '0');
+    let day = date.getDate().toString().padStart(2, '0');
+    var dateString = '';
+    mode === 1
+        ? (dateString = month + '-' + day + '-' + year)
+        : mode === 2
+        ? (dateString = year + '-' + month + '-' + day)
+        : mode === 3
+        ? (dateString = day + '-' + month + '-' + year)
+        : '';
 
-    const random = Math.random().toString(36).substr(2, 11);
+    return dateString;
+};
+
+const now = new Date();
+
+const CreateProject = ({navigation}) => {
+    const [data, setData] = useState({
+        project_title: '',
+        start_date: '',
+        due_date: '',
+        estimate_hours: '',
+    });
+    const [showDatePicker1, setShowDatePicker1] = useState(false);
+    const [showDatePicker2, setShowDatePicker2] = useState(false);
+    const [startDate, setStartDate] = useState();
+    const [endDate, setEndDate] = useState();
+
+    const randomId = () => {
+        return Math.random().toString(36).substr(2, 11);
+    };
+
+    const alertDate = text =>
+        Alert.alert('Alert', text, [
+            {text: 'OK', onPress: () => showDatePicker()},
+        ]);
 
     const handleCreateProject = async () => {
-        await setDoc(doc(db, 'projectList', random), {
-            project_title: 'abc',
+        await setDoc(doc(db, 'projectList', randomId()), {
+            project_title: data.project_title,
             assign_lead: '1',
-            start_date: '2021-12-06',
-            due_date: '2021-12-31',
+            start_date: data.start_date,
+            due_date: data.due_date,
             progress: 0,
-            project_created: '',
-            estimate_hours: 350,
-            task: [],
+            project_created: convertDateToString(now, 2),
+            estimate_hours: data.estimate_hours,
+            tasks: [
+                {
+                    task_detail: {
+                        t_id: 28,
+                        task_name: 'Patient appointment booking ',
+                        estimated_hours: 12,
+                        description: 'test',
+                        task_progress: 0,
+                        start_date: '2021-11-28',
+                        due_date: '2021-11-29',
+                        user_id: '1',
+                    },
+                    task_comment: [
+                    ],
+                    task_files: [],
+                    assigned_to: [],
+                },
+                {
+                    task_detail: {
+                        t_id: 26,
+                        task_name: 'Appointment booking with payment gateway ',
+                        estimated_hours: 4,
+                        description: '',
+                        task_progress: 100,
+                        start_date: '2021-11-24',
+                        due_date: '2021-11-24',
+                        user_id: '2',
+                    },
+                    task_comment: [],
+                    task_files: [],
+                    assigned_to: [],
+                },
+            ],
         });
     };
 
@@ -45,31 +111,50 @@ const CreateProject = ({navigation}) => {
         // navigation.pop();
     };
 
-    const toggleSwitch1 = value => {
-        setToggle(value);
+    const showDatePicker = () => {
+        setShowDatePicker1(true);
     };
-    const isLead = () => {
-        if (toggle) {
-            return (
-                <></>
-                // <Item floatingLabel>
-                //     <Label style={styles.loginLabel}>Fixed Price</Label>
-                //     <Input />
-                // </Item>
-            );
+
+    const hideDatePicker = () => {
+        setShowDatePicker1(false);
+    };
+
+    const handleConfirm = date => {
+        const dateStart = convertDateToString(date, 2);
+        const startDay = new Date(dateStart).getTime();
+        const today = new Date(convertDateToString(now, 2)).getTime();
+
+        if (startDay >= today) {
+            setStartDate(date);
+            setData({...data, start_date: dateStart});
+            hideDatePicker();
         } else {
-            return (
-                <></>
-                // <Item floatingLabel>
-                //     <Label style={styles.loginLabel}>Hourly Rate</Label>
-                //     <Input />
-                // </Item>
-            );
+            hideDatePicker();
+            alertDate('The start date cannot be before the current date!');
         }
     };
 
-    const addProjects = () => {
-        navigation.pop();
+    const handleConfirmEnd = date => {
+        const dateEnd = convertDateToString(date, 2);
+        const endDay = new Date(dateEnd).getTime();
+        const today = new Date(convertDateToString(now, 2)).getTime();
+
+        if (endDay >= today) {
+            setEndDate(date);
+            setData({...data, due_date: dateEnd});
+            hideDatePicker();
+        } else {
+            hideDatePicker();
+            alertDate('The end date cannot be before the current date!');
+        }
+    };
+
+    const showDatePickerEnd = () => {
+        setShowDatePicker2(true);
+    };
+
+    const hideDatePickerEnd = () => {
+        setShowDatePicker2(false);
     };
 
     return (
@@ -81,83 +166,94 @@ const CreateProject = ({navigation}) => {
                 navigation={navigation}
             />
             <ScrollView>
-                <View style={{paddingRight: 15}}></View>
-                <Button title="create" onPress={onCreateProject} />
-                {/* <Form style={{paddingRight: 15}}>
-                        <Item floatingLabel>
-                            <Label style={styles.loginLabel}>
-                                Project Title
-                            </Label>
-                            <Input />
-                        </Item>
-                        <Item floatingLabel>
-                            <Label style={styles.loginLabel}>Assign Lead</Label>
-                            <Input />
-                        </Item>
-                        <Item floatingLabel>
-                            <Label style={styles.loginLabel}>Assign To</Label>
-                            <Input />
-                        </Item>
-                        <Item floatingLabel>
-                            <Label style={styles.loginLabel}>Fixed Rate</Label>
-                            <Input />
-                        </Item>
-                        <Text
-                            style={[
-                                styles.loginLabel,
-                                {
-                                    textAlign: 'left',
-                                    marginTop: 15,
-                                    marginLeft: 15,
-                                },
-                            ]}>
-                            Start Date
-                        </Text>
-                        <View style={styles.container}>
-                            <DatePicker
-                                locale={'en'}
-                                modalTransparent={false}
-                                animationType={'fade'}
-                                androidMode={'default'}
-                                placeHolderText="Select date"
-                                textStyle={{color: '#000000'}}
-                                placeHolderTextStyle={{
-                                    color: '#000000',
-                                    fontSize: 14,
-                                }}
-                                disabled={false}
-                            />
-                        </View>
-                        <Text
-                            style={[
-                                styles.loginLabel,
-                                {textAlign: 'left', margin: 15},
-                            ]}>
-                            Fixed Price
-                        </Text>
-                        <View style={styles.container}>
-                            <Switch
-                                onValueChange={this.toggleSwitch1}
-                                value={this.state.toggle}
-                            />
-                        </View>
-                        {this.isLead()}
-                        <Item floatingLabel>
-                            <Label style={styles.loginLabel}>
-                                Estimated Hours
-                            </Label>
-                            <Input />
-                        </Item>
-                        <Item floatingLabel>
-                            <Label style={styles.loginLabel}>Description</Label>
-                            <Input />
-                        </Item>
-                    </Form>
-                    <TouchableHighlight
-                        style={[styles.buttonContainer, styles.loginButton]}
-                        onPress={() => this.addProjects()}>
-                        <Text style={styles.loginText}>Create Project</Text>
-                    </TouchableHighlight> */}
+                <View style={{margin: 15}}>
+                    {/* <Text style={styles.label}>Project name: </Text>
+                    <View style={styles.action}>
+                        <TextInput
+                            onChangeText={text =>
+                                setData({...data, project_title: text})
+                            }
+                            style={styles.textInput}
+                            autoCapitalize="none"
+                        />
+                    </View> */}
+                    <View style={styles.action}>
+                        <TextInput
+                            onChangeText={text =>
+                                setData({...data, project_title: text})
+                            }
+                            label="Project name"
+                            style={styles.textInput}
+                            autoCapitalize="none"
+                        />
+                    </View>
+                    <View style={styles.action}>
+                        <TextInput
+                            value={
+                                startDate
+                                    ? convertDateToString(startDate, 3)
+                                    : ''
+                            }
+                            label="Start date"
+                            style={styles.textInput}
+                            autoCapitalize="none"
+                            onFocus={showDatePicker}
+                            right={
+                                <MaterialCommunityIcons
+                                    name="calendar"
+                                    color="grey"
+                                    size={20}
+                                />
+                            }
+                        />
+                    </View>
+                    <View style={styles.action}>
+                        <TextInput
+                            // onChangeText={text =>
+                            //     setData({...data, due_date: text})
+                            // }
+                            label="Due date"
+                            style={styles.textInput}
+                            autoCapitalize="none"
+                            value={endDate && convertDateToString(endDate, 3)}
+                            onFocus={showDatePickerEnd}
+                            right={
+                                <MaterialCommunityIcons
+                                    name="calendar"
+                                    color="grey"
+                                    size={20}
+                                />
+                            }
+                        />
+                    </View>
+                    <View style={styles.action}>
+                        <TextInput
+                            onChangeText={text =>
+                                setData({...data, estimate_hours: text})
+                            }
+                            label="Estimate time(hours)"
+                            style={styles.textInput}
+                            autoCapitalize="none"
+                        />
+                    </View>
+                </View>
+
+                <View style={{paddingHorizontal: 15}}>
+                    <Button title="create" onPress={onCreateProject} />
+                </View>
+
+                <DateTimePickerModal
+                    isVisible={showDatePicker1}
+                    mode="date"
+                    onConfirm={handleConfirm}
+                    onCancel={hideDatePicker}
+                />
+                <DateTimePickerModal
+                    isVisible={showDatePicker2}
+                    mode="date"
+                    onConfirm={handleConfirmEnd}
+                    onCancel={hideDatePickerEnd}
+                />
             </ScrollView>
         </View>
     );
@@ -173,103 +269,25 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffffff',
         color: '#918E8E',
     },
-    toggleContainer: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
-        width: '100%',
-        color: '#918E8E',
-    },
-    logocontainer: {
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    loginLabel: {
-        fontSize: 14,
-        color: '#000000',
-    },
-    logo: {
-        width: 150,
-        height: 150,
-        resizeMode: 'contain',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    loginTitle: {
-        marginTop: '10%',
-        width: '100%',
-        height: 40,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    loginTitleText: {
-        color: '#000',
-        fontSize: 16,
-        fontWeight: '700',
-    },
-    loginContainer: {
-        marginTop: '15%',
-        alignItems: 'center',
-        marginBottom: '15%',
-        marginLeft: '2%',
-        marginRight: '2%',
+    action: {
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+        marginBottom: 15,
+        // backgroundColor: '#e6f9ff',
+        // borderBottomWidth: 1,
+        // borderBottomColor: '#BFBBBB',
     },
     textInput: {
-        marginTop: 10,
-    },
-    inputContainer: {
-        borderColor: '#e7e7e7',
-        backgroundColor: '#FFFFFF',
-        borderRadius: 3,
-        borderWidth: 1,
-        color: '#998e8e',
-        width: '90%',
-        height: 40,
-        marginBottom: 20,
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    inputs: {
-        height: 40,
-        marginLeft: 10,
-        borderBottomColor: '#FFFFFF',
         flex: 1,
+        height: 55,
+        backgroundColor: '#e6fffe',
+        paddingBottom: 0,
+        color: '#05375a',
+        fontSize: 16,
+        borderBottom: 'none',
     },
-    buttonContainer: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        margin: 15,
-        borderRadius: 2,
-    },
-    forgetPassword: {
-        textAlign: 'right',
-        color: '#918E8E',
-    },
-    loginButton: {
-        backgroundColor: '#44bbec',
-        borderRadius: 5,
-    },
-    orText: {
-        marginTop: '5%',
-        marginBottom: '5%',
-        alignItems: 'center',
-    },
-    orTextText: {
-        color: '#918E8E',
-    },
-    registerButton: {
-        backgroundColor: '#0065f3',
-        borderRadius: 3,
-    },
-    loginText: {
-        color: 'white',
-        height: 38,
-        fontSize: 18,
-        justifyContent: 'center',
-        marginTop: 13,
-        textAlign: 'center',
-        width: '100%',
-        borderRadius: 2,
+    label: {
+        fontSize: 14,
+        fontHeight: 400,
     },
 });

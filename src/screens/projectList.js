@@ -19,20 +19,16 @@ const ProjectList = ({navigation}) => {
         borderColor: '#fff',
     });
     const [isLoading, setIsLoading] = useState(true);
-    var opentasks = 0;
-    var completedtasks = 0;
     dataSource.forEach((value, key) => {
         dataSource[key].opentasks = 0;
         dataSource[key].completedtasks = 0;
-        dataSource[key].task.forEach((val, k) => {
+        dataSource[key].tasks.forEach((val, k) => {
             if (val.task_detail.task_progress === 100) {
                 dataSource[key].completedtasks++;
             } else {
                 dataSource[key].opentasks++;
             }
-            console.log('val', val);
         });
-        // console.log('value', value);
     });
     useEffect(() => {
         GetData();

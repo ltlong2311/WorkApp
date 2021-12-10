@@ -67,7 +67,7 @@ const HeaderComponent = ({
                 {edit ? (
                     <Button
                         transparent
-                        onPress={() => navigation.navigate(next)}>
+                        onPress={() => navigation.navigate(next, {data: data})}>
                         <View>
                             <Image
                                 style={styles.editIcon}
@@ -77,7 +77,7 @@ const HeaderComponent = ({
                     </Button>
                 ) : add ? (
                     <TouchableOpacity
-                        onPress={() => navigation.navigate(next, {data: data})}>
+                        onPress={() => navigation.push(next, {data: data})}>
                         <MaterialCommunityIcons
                             name="plus"
                             size={28}
