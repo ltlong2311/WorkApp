@@ -19,7 +19,7 @@ const data = new Array(100)
 
 const EmployeeList = ({navigation}) => {
     const [dataSource, setDataSource] = useState(DataService.employeeList());
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
     const openProfile = () => {
         navigation.navigate('Profile');

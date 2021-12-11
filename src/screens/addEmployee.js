@@ -3,34 +3,31 @@ import {
     StyleSheet,
     Text,
     View,
-    TextInput,
-    TouchableHighlight,
-    Image,
-    Switch,
+    Button,
+    TouchableOpacity,
     ScrollView,
-    Platform,
 } from 'react-native';
+import {TextInput} from 'react-native-paper';
 
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import HeaderComponent from '../components/HeaderComponent';
 import Loading from '../components/loading';
-import HeaderComponent from '../components/Header';
-
 import {db} from '../../firebaseConnect';
 import {doc, setDoc} from 'firebase/firestore/lite';
 
-const AddTask = ({navigation}) => {
+const AddEmployee = ({navigation}) => {
     const [data, setData] = useState({
-        task_title: '',
+        project_title: '',
         start_date: '',
+        due_date: '',
         estimate_hours: '',
     });
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
     const randomId = () => {
         return Math.random().toString(36).substr(2, 11);
     };
 
-    const handleCreateTask = async () => {
+    const handleCreateEmployee = async () => {
         showLoading();
         await setDoc(doc(db, 'employeeList', randomId()), {
             assign_lead: '1',
@@ -39,6 +36,7 @@ const AddTask = ({navigation}) => {
         hideLoading();
     };
 
+    //Show Loader function
     const showLoading = () => {
         setIsLoading(true);
     };
@@ -46,70 +44,121 @@ const AddTask = ({navigation}) => {
     const hideLoading = () => {
         setIsLoading(false);
     };
+    const addEmp = () => {
+        navigation.pop();
+    };
 
     return (
         <View style={styles.container}>
             <HeaderComponent
                 back="true"
-                title="Create Task"
+                title="Add Employee"
                 noIcon="true"
-                navigation={this.props.navigation}
+                navigation={navigation}
             />
             <ScrollView>
                 <View style={{margin: 15}}>
-                    <Text style={styles.label}>Task Title: </Text>
                     <View style={styles.action}>
                         <TextInput
                             onChangeText={text =>
                                 setData({...data, project_title: text})
                             }
+                            mode="outlined"
+                            label="Full name"
                             style={styles.textInput}
                             autoCapitalize="none"
                         />
                     </View>
-                    <Text style={styles.label}>Start Date: </Text>
                     <View style={styles.action}>
                         <TextInput
                             onChangeText={text =>
                                 setData({...data, project_title: text})
                             }
+                            mode="outlined"
+                            label="Username"
                             style={styles.textInput}
                             autoCapitalize="none"
                         />
                     </View>
-                    <Text style={styles.label}>Estimated Hours: </Text>
                     <View style={styles.action}>
                         <TextInput
                             onChangeText={text =>
                                 setData({...data, project_title: text})
                             }
+                            mode="outlined"
+                            label="Password"
                             style={styles.textInput}
                             autoCapitalize="none"
                         />
                     </View>
-                    <Text style={styles.label}>Description: </Text>
                     <View style={styles.action}>
                         <TextInput
                             onChangeText={text =>
                                 setData({...data, project_title: text})
                             }
+                            mode="outlined"
+                            label="Phone"
+                            style={styles.textInput}
+                            autoCapitalize="none"
+                        />
+                    </View>
+                    <View style={styles.action}>
+                        <TextInput
+                            onChangeText={text =>
+                                setData({...data, project_title: text})
+                            }
+                            mode="outlined"
+                            label="Email"
+                            style={styles.textInput}
+                            autoCapitalize="none"
+                        />
+                    </View>
+                    <View style={styles.action}>
+                        <TextInput
+                            onChangeText={text =>
+                                setData({...data, project_title: text})
+                            }
+                            mode="outlined"
+                            label="Password"
+                            style={styles.textInput}
+                            autoCapitalize="none"
+                        />
+                    </View>
+                    <View style={styles.action}>
+                        <TextInput
+                            onChangeText={text =>
+                                setData({...data, project_title: text})
+                            }
+                            mode="outlined"
+                            label="Department"
+                            style={styles.textInput}
+                            autoCapitalize="none"
+                        />
+                    </View>
+                    <View style={styles.action}>
+                        <TextInput
+                            onChangeText={text =>
+                                setData({...data, project_title: text})
+                            }
+                            mode="outlined"
+                            label="Designation"
                             style={styles.textInput}
                             autoCapitalize="none"
                         />
                     </View>
                 </View>
-                <TouchableHighlight
-                    style={[styles.buttonContainer, styles.loginButton]}
-                    onPress={() => this.addTask()}>
-                    <Text style={styles.loginText}>Create Task</Text>
-                </TouchableHighlight>
+
+                <View style={{paddingHorizontal: 15}}>
+                    <Button title="create" onPress={handleCreateEmployee} />
+                </View>
+
             </ScrollView>
             {isLoading && <Loading />}
         </View>
     );
 };
 
-export default AddTask;
+export default AddEmployee;
 
 const styles = StyleSheet.create({
     container: {
@@ -126,10 +175,10 @@ const styles = StyleSheet.create({
     },
     textInput: {
         flex: 1,
-        height: 55,
+        height: 40,
         backgroundColor: '#e6fffe',
         paddingBottom: 0,
-        color: '#05375a',
+        outlineColor: '#05375a',
         fontSize: 16,
         borderBottom: 'none',
     },

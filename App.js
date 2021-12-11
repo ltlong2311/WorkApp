@@ -25,6 +25,8 @@ import TaskView from './src/screens/taskView';
 import TaskList from './src/screens/taskList';
 import CreateProject from './src/screens/createProject';
 import ProfilePage from './src/screens/profile';
+import AddEmployee from './src/screens/addEmployee';
+import EditEmployee from './src/screens/editEmployee';
 
 const Stack = createStackNavigator();
 
@@ -38,6 +40,8 @@ const App = () => {
                 <Stack.Screen name="Dashboard" component={Dashboard} />
                 <Stack.Screen name="RegisterPage" component={RegisterPage} />
                 <Stack.Screen name="EmployeeList" component={EmployeeList} />
+                <Stack.Screen name="AddEmployee" component={AddEmployee} />
+                <Stack.Screen name="EditEmployee" component={EditEmployee} />
                 <Stack.Screen name="ProjectList" component={ProjectList} />
                 <Stack.Screen name="TaskList" component={TaskList} />
                 <Stack.Screen name="TaskView" component={TaskView} />

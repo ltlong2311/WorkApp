@@ -25,13 +25,18 @@ const HeaderComponent = ({
     next,
     data,
     goBack,
+    transparentBG,
 }) => {
     return (
         <SafeAreaView>
             <LinearGradient
                 start={{x: 0, y: 0}}
                 end={{x: 1, y: 0}}
-                colors={['#44bbec', '#38c3fc']}
+                colors={
+                    transparentBG
+                        ? [COLORS.transparent, COLORS.transparent]
+                        : ['#44bbec', '#38c3fc']
+                }
                 style={styles.header}>
                 {back ? (
                     <MaterialIcons
@@ -107,5 +112,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+    },
+    editIcon: {
+        width: 25,
+        height: 25,
     },
 });

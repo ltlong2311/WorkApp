@@ -11,9 +11,7 @@ import {
     Platform,
     Alert,
 } from 'react-native';
-// import {Input} from 'native-base';
 import {TextInput} from 'react-native-paper';
-import Loading from '../components/loading';
 import HeaderComponent from '../components/HeaderComponent';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -80,8 +78,7 @@ const CreateProject = ({navigation}) => {
                         due_date: '2021-11-29',
                         user_id: '1',
                     },
-                    task_comment: [
-                    ],
+                    task_comment: [],
                     task_files: [],
                     assigned_to: [],
                 },
@@ -104,11 +101,14 @@ const CreateProject = ({navigation}) => {
         });
     };
 
+    const alertMess = text =>
+        Alert.alert('Message', text, [
+            {text: 'OK', onPress: () => navigation.push('ProjectList')},
+        ]);
+
     const onCreateProject = () => {
         handleCreateProject();
-        Alert.alert('Message', 'Deleted successfully');
-        navigation.push('ProjectList');
-        // navigation.pop();
+        alertMess('Deleted successfully');
     };
 
     const showDatePicker = () => {
