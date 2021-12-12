@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {TouchableOpacity} from 'react-native';
 import {View, Text, Image, FlatList, StyleSheet, Alert} from 'react-native';
 import CardView from 'react-native-cardview';
@@ -9,6 +9,7 @@ import {
     MenuOptions,
     MenuOption,
 } from 'react-native-popup-menu';
+import {useIsFocused} from '@react-navigation/native';
 import HeaderComponent from '../components/HeaderComponent';
 
 import DataService from '../services/dataService';
@@ -20,10 +21,17 @@ import DataService from '../services/dataService';
 const EmployeeList = ({navigation}) => {
     const [dataSource, setDataSource] = useState(DataService.employeeList());
     const [isLoading, setIsLoading] = useState(false);
+    const isFocused = useIsFocused();
 
     const openProfile = () => {
         navigation.navigate('Profile');
     };
+
+    useEffect(() => {
+        fetchData();
+    }, [isFocused]);
+
+    const fetchData = () => {};
 
     const _renderItem = ({item}) => (
         <View style={styles.cardView}>
@@ -159,7 +167,7 @@ const styles = StyleSheet.create({
         fontSize: 25,
     },
     firstLetterView: {
-        backgroundColor: '#aaa',
+        backgroundColor: '#619eff',
         height: 50,
         width: 50,
         borderRadius: 50,

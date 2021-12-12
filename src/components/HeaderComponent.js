@@ -44,10 +44,13 @@ const HeaderComponent = ({
                         size={23}
                         color={COLORS.white}
                         onPress={
-                            goBack
-                                ? () => navigation.navigate(goBack)
-                                : navigation.goBack
+                            navigation.goBack
                         }
+                        // onPress={
+                        //     goBack
+                        //         ? () => navigation.navigate(goBack)
+                        //         : navigation.goBack
+                        // }
                     />
                 ) : (
                     <MaterialIcons

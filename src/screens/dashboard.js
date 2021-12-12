@@ -26,7 +26,7 @@ import {
 import COLORS from '../consts/color';
 // import HeaderNav from '../components/HeaderNav';
 
-const Dashboard = ({navigation}) => {
+const Dashboard = ({navigation, route}) => {
     const employeeList = () => {
         navigation.navigate('EmployeeList');
     };
@@ -61,6 +61,11 @@ const Dashboard = ({navigation}) => {
                                 color={COLORS.white}
                             />
                             <MaterialIcons
+                                onPress={() =>
+                                    navigation.dispatch(
+                                        DrawerActions.openDrawer(),
+                                    )
+                                }
                                 name="more-vert"
                                 size={28}
                                 color={COLORS.white}

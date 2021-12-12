@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {TouchableOpacity, TouchableHighlight} from 'react-native';
 import {View, Text, Image, StyleSheet, Dimensions, Alert} from 'react-native';
 import CardView from 'react-native-cardview';
+import { useIsFocused } from '@react-navigation/native';
 import HeaderComponent from '../components/HeaderComponent';
 import DataService from '../services/dataService';
 import {SwipeListView} from 'react-native-swipe-list-view';
@@ -9,6 +10,7 @@ import ProgressBarAnimated from 'react-native-progress-bar-animated';
 
 import {db} from '../../firebaseConnect';
 import {collection, getDocs} from 'firebase/firestore/lite';
+
 
 const ProjectList = ({navigation}) => {
     // const [dataSource, setDataSource] = useState(DataService.projectList());
@@ -32,6 +34,10 @@ const ProjectList = ({navigation}) => {
     });
     useEffect(() => {
         GetData();
+        const willFocusSubscription = navigation.addListener('focus', () => {
+            GetData();
+        });
+        return willFocusSubscription;
     }, []);
 
     const GetData = async () => {

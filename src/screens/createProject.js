@@ -101,9 +101,14 @@ const CreateProject = ({navigation}) => {
         });
     };
 
+    const back = () => {
+        return Math.random().toString(36).substr(2, 11);
+    };
+
     const alertMess = text =>
         Alert.alert('Message', text, [
-            {text: 'OK', onPress: () => navigation.push('ProjectList')},
+            // {text: 'OK', onPress: navigation.pop()},
+            {text: 'OK', onPress: navigation.goBack(null)},
         ]);
 
     const onCreateProject = () => {
