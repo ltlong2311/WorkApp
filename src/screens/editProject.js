@@ -1,139 +1,96 @@
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import {
     StyleSheet,
-    Text,
+    Button,
     View,
-    TextInput,
-    TouchableHighlight,
-    Image,
-    Switch,
     ScrollView,
-    Platform,
 } from 'react-native';
-// import {
-//     Form,
-//     Item,
-//     Input,
-//     Label,
-// } from 'native-base';
 import Loading from '../components/loading';
 import HeaderComponent from '../components/HeaderComponent';
 import DataService from '../services/dataService';
+import {TextInput} from 'react-native-paper';
 
-export default class EditProject extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            email: '',
-            password: '',
-            toggle: false,
-        };
-        this.state.dataSource = DataService.projectList();
-        this.state.dataSource = this.state.dataSource[0];
-    }
 
-    toggleSwitch1 = value => {
-        this.setState({toggle: value});
-    };
+const EditProject = ({navigation}) => {
+    const [dataSource, setDataSource] = useState(DataService.projectList()[0]);
 
-    isLead = () => {
-        if (this.state.toggle) {
-            return (
-                <></>
-                // <Item floatingLabel>
-                //     <Label style={styles.loginLabel}>Fixed Price</Label>
-                //     <Input
-                //         value={this.state.dataSource.overviews.fixed_price}
-                //     />
-                // </Item>
-            );
-        } else {
-            return (
-                <></>
-                // <Item floatingLabel>
-                //     <Label style={styles.loginLabel}>Hourly Rate</Label>
-                //     <Input
-                //         value={this.state.dataSource.overviews.hourly_rate}
-                //     />
-                // </Item>
-            );
-        }
-    };
+    const [data, setData] = useState({
+        project_title: '',
+        start_date: '',
+        due_date: '',
+        estimate_hours: '',
+    });
 
-    editProjects = () => {
-        this.props.navigation.pop();
-    };
+    return (
+        <View style={styles.container}>
+            <HeaderComponent
+                back="true"
+                title="Edit Project"
+                noIcon="true"
+                navigation={navigation}
+            />
+            <ScrollView>
+            <View style={{margin: 15}}>
+                    {/* <Text style={styles.label}>Project name: </Text>
+                    <View style={styles.action}>
+                        <TextInput
+                            onChangeText={text =>
+                                setData({...data, project_title: text})
+                            }
+                            style={styles.textInput}
+                            autoCapitalize="none"
+                        />
+                    </View> */}
+                    <View style={styles.action}>
+                        <TextInput
+                            onChangeText={text =>
+                                setData({...data, project_title: text})
+                            }
+                            label="Project name"
+                            style={styles.textInput}
+                            autoCapitalize="none"
+                        />
+                    </View>
+                    <View style={styles.action}>
+                        <TextInput
+                            label="Start date"
+                            style={styles.textInput}
+                            autoCapitalize="none"
+                        />
+                    </View>
+                    <View style={styles.action}>
+                        <TextInput
+                            // onChangeText={text =>
+                            //     setData({...data, due_date: text})
+                            // }
+                            label="Due date"
+                            style={styles.textInput}
+                            autoCapitalize="none"
+                        />
+                    </View>
+                    <View style={styles.action}>
+                        <TextInput
+                            onChangeText={text =>
+                                setData({...data, estimate_hours: text})
+                            }
+                            label="Estimate time(hours)"
+                            style={styles.textInput}
+                            autoCapitalize="none"
+                        />
+                    </View>
+                </View>
 
-    render() {
-        return (
-            <View style={styles.container}>
-                <HeaderComponent
-                    back="true"
-                    title="Edit Project"
-                    noIcon="true"
-                    navigation={this.props.navigation}
-                />
-                <ScrollView>
-                    {/* <Form style={{paddingRight: 15}}>
-                        <Item floatingLabel>
-                            <Label style={styles.loginLabel}>
-                                Project Code
-                            </Label>
-                            <Input
-                                value={
-                                    this.state.dataSource.overviews.project_code
-                                }
-                            />
-                        </Item>
-                        <Item floatingLabel>
-                            <Label style={styles.loginLabel}>
-                                Project Title
-                            </Label>
-                            <Input
-                                value={
-                                    this.state.dataSource.overviews
-                                        .project_title
-                                }
-                            />
-                        </Item>
-                        <Item floatingLabel>
-                            <Label style={styles.loginLabel}>Fixed Rate</Label>
-                            <Input value={this.state.dataSource.overviews.fixed_price} />
-                        </Item>
-                        <View style={styles.container}>
-                            <Switch
-                                onValueChange={this.toggleSwitch1}
-                                value={this.state.toggle}
-                            />
-                        </View>
-                        {this.isLead()}
-                        <Item floatingLabel>
-                            <Label style={styles.loginLabel}>
-                                Estimated Hours
-                            </Label>
-                            <Input
-                                value={this.state.dataSource.estimated_hours}
-                            />
-                        </Item>
-                        <Item floatingLabel>
-                            <Label style={styles.loginLabel}>Description</Label>
-                            <Input
-                                value={
-                                    this.state.dataSource.overviews.description
-                                }
-                            />
-                        </Item>
-                    </Form>
-                    <TouchableHighlight
-                        style={[styles.buttonContainer, styles.loginButton]}
-                        onPress={() => this.editProjects()}>
-                        <Text style={styles.loginText}>Edit Project</Text>
-                    </TouchableHighlight> */}
-                </ScrollView>
-            </View>
-        );
-    }
-}
+                <View style={{paddingHorizontal: 15}}>
+                    <Button title="Edit"  />
+                </View>
+
+
+            </ScrollView>
+        </View>
+    );
+};
+
+export default EditProject;
 
 const styles = StyleSheet.create({
     container: {
@@ -154,92 +111,22 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    loginLabel: {
-        fontSize: 14,
-        color: '#000000',
-    },
-    logo: {
-        width: 150,
-        height: 150,
-        resizeMode: 'contain',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    loginTitle: {
-        marginTop: '10%',
-        width: '100%',
-        height: 40,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    loginTitleText: {
-        color: '#000',
-        fontSize: 16,
-        fontWeight: '700',
-    },
-    loginContainer: {
-        marginTop: '15%',
-        alignItems: 'center',
-        marginBottom: '15%',
-        marginLeft: '2%',
-        marginRight: '2%',
+    action: {
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+        marginBottom: 15,
     },
     textInput: {
-        marginTop: 10,
-    },
-    inputContainer: {
-        borderColor: '#e7e7e7',
-        backgroundColor: '#FFFFFF',
-        borderRadius: 3,
-        borderWidth: 1,
-        color: '#998e8e',
-        width: '90%',
-        height: 40,
-        marginBottom: 20,
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    inputs: {
-        height: 40,
-        marginLeft: 10,
-        borderBottomColor: '#FFFFFF',
         flex: 1,
+        height: 50,
+        backgroundColor: '#e6fffe',
+        paddingBottom: 0,
+        color: '#05375a',
+        fontSize: 16,
+        borderBottom: 'none',
     },
-    buttonContainer: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        margin: 15,
-        borderRadius: 2,
-    },
-    forgetPassword: {
-        textAlign: 'right',
-        color: '#918E8E',
-    },
-    loginButton: {
-        backgroundColor: '#44bbec',
-        borderRadius: 5,
-    },
-    orText: {
-        marginTop: '5%',
-        marginBottom: '5%',
-        alignItems: 'center',
-    },
-    orTextText: {
-        color: '#918E8E',
-    },
-    registerButton: {
-        backgroundColor: '#0065f3',
-        borderRadius: 3,
-    },
-    loginText: {
-        color: 'white',
-        height: 38,
-        fontSize: 18,
-        justifyContent: 'center',
-        marginTop: 13,
-        textAlign: 'center',
-        width: '100%',
-        borderRadius: 2,
+    label: {
+        fontSize: 14,
+        fontHeight: 400,
     },
 });

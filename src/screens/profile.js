@@ -65,7 +65,7 @@ const ProfilePage = ({navigation, item}) => {
                 </LinearGradient>
             </View>
             <View style={{flex: 6}}>
-                {/* <InfoCard navigation={navigation} item={item} /> */}
+                <InfoCard navigation={navigation} item={item} />
             </View>
         </View>
     );

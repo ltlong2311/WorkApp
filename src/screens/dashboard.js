@@ -38,101 +38,95 @@ const Dashboard = ({navigation}) => {
     };
 
     return (
-        <MenuProvider>
-            <View style={styles.container}>
-                <StatusBar
-                    translucent
-                    backgroundColor="transparent"
-                    barStyle="light-content"
-                />
-                <ScrollView style={styles.container}>
-                    <View style={{height: 320, zIndex: 0}}>
-                        <LinearGradient
-                            colors={['#44bbec', '#619eff', '#206fe8']}
-                            style={styles.linearGradient}>
-                            <View style={styles.header}>
-                                <MaterialIcons
-                                    onPress={() =>
-                                        navigation.dispatch(
-                                            DrawerActions.openDrawer(),
-                                        )
-                                    }
-                                    name="menu"
-                                    size={28}
-                                    color={COLORS.white}
-                                />
-                                <MaterialIcons
-                                    name="more-vert"
-                                    size={28}
-                                    color={COLORS.white}
-                                />
-                            </View>
-                            <View style={styles.dashBoardCard}>
-                                <Image
-                                    style={styles.logo}
-                                    source={require('../assets/logo-app.png')}
-                                />
-                            </View>
-                        </LinearGradient>
-                    </View>
-                    <View style={styles.cardView}>
-                        <TouchableOpacity
-                            style={styles.card}
-                            onPress={TaskList}>
-                            <CardView
-                                style={styles.cardData}
-                                cardElevation={2}
-                                cardMaxElevation={2}
-                                cornerRadius={5}>
-                                <FontAwesome
-                                    name="briefcase"
-                                    size={35}
-                                    color="#008fc9"
-                                />
-                                <Text style={styles.cardTitle}>Manager</Text>
-                            </CardView>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.cardView}>
-                        <TouchableOpacity
-                            style={styles.card}
-                            onPress={employeeList}>
-                            <CardView
-                                style={styles.cardData}
-                                cardElevation={2}
-                                cardMaxElevation={2}
-                                cornerRadius={5}>
-                                <FontAwesome
-                                    name="users"
-                                    size={35}
-                                    color="#008fc9"
-                                />
-                                <Text style={styles.cardQuantity}>70</Text>
-                                <Text style={styles.cardTitle}>Employees</Text>
-                            </CardView>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.card}
-                            onPress={projectList}>
-                            <CardView
-                                style={styles.cardData}
-                                cardElevation={2}
-                                cardMaxElevation={2}
-                                cornerRadius={5}>
-                                <FontAwesome
-                                    name="cubes"
-                                    size={35}
-                                    fontWeight="600"
-                                    color="#008fc9"
-                                />
-                                <Text style={styles.cardQuantity}>60</Text>
-                                <Text style={styles.cardTitle}>Project</Text>
-                            </CardView>
-                        </TouchableOpacity>
-                    </View>
-                </ScrollView>
-            </View>
-        </MenuProvider>
+        <View style={styles.container}>
+            <StatusBar
+                translucent
+                backgroundColor="transparent"
+                barStyle="light-content"
+            />
+            <ScrollView style={styles.container}>
+                <View style={{height: 320, zIndex: 0}}>
+                    <LinearGradient
+                        colors={['#44bbec', '#619eff', '#206fe8']}
+                        style={styles.linearGradient}>
+                        <View style={styles.header}>
+                            <MaterialIcons
+                                onPress={() =>
+                                    navigation.dispatch(
+                                        DrawerActions.openDrawer(),
+                                    )
+                                }
+                                name="menu"
+                                size={28}
+                                color={COLORS.white}
+                            />
+                            <MaterialIcons
+                                name="more-vert"
+                                size={28}
+                                color={COLORS.white}
+                            />
+                        </View>
+                        <View style={styles.dashBoardCard}>
+                            <Image
+                                style={styles.logo}
+                                source={require('../assets/logo-app.png')}
+                            />
+                        </View>
+                    </LinearGradient>
+                </View>
+                <View style={styles.cardView}>
+                    <TouchableOpacity style={styles.card} onPress={TaskList}>
+                        <CardView
+                            style={styles.cardData}
+                            cardElevation={2}
+                            cardMaxElevation={2}
+                            cornerRadius={5}>
+                            <FontAwesome
+                                name="briefcase"
+                                size={35}
+                                color="#008fc9"
+                            />
+                            <Text style={styles.cardTitle}>Manager</Text>
+                        </CardView>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.cardView}>
+                    <TouchableOpacity
+                        style={styles.card}
+                        onPress={employeeList}>
+                        <CardView
+                            style={styles.cardData}
+                            cardElevation={2}
+                            cardMaxElevation={2}
+                            cornerRadius={5}>
+                            <FontAwesome
+                                name="users"
+                                size={35}
+                                color="#008fc9"
+                            />
+                            <Text style={styles.cardQuantity}>70</Text>
+                            <Text style={styles.cardTitle}>Employees</Text>
+                        </CardView>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.card} onPress={projectList}>
+                        <CardView
+                            style={styles.cardData}
+                            cardElevation={2}
+                            cardMaxElevation={2}
+                            cornerRadius={5}>
+                            <FontAwesome
+                                name="cubes"
+                                size={35}
+                                fontWeight="600"
+                                color="#008fc9"
+                            />
+                            <Text style={styles.cardQuantity}>60</Text>
+                            <Text style={styles.cardTitle}>Project</Text>
+                        </CardView>
+                    </TouchableOpacity>
+                </View>
+            </ScrollView>
+        </View>
     );
 };
 

@@ -7,11 +7,24 @@ const InfoCard = ({item}) => {
     return (
         <View style={styles.scene}>
             <ScrollView contentContainerStyle={styles.contentContainer}>
+
                 <CardView
                     style={styles.cardData}
                     cardElevation={0}
                     cardMaxElevation={0}
                     cornerRadius={0}>
+                          <View style={styles.leftContainer}>
+                        <Text
+                            style={[
+                                {
+                                    textAlign: 'left',
+                                    fontWeight: '600',
+                                },
+                                styles.swipeCardLeftText,
+                            ]}>
+                            Overview
+                        </Text>
+                    </View>
                     <View style={styles.taskRow}>
                         <View style={styles.leftContainer}>
                             <Text
@@ -28,7 +41,7 @@ const InfoCard = ({item}) => {
                                     {textAlign: 'right'},
                                     styles.swipeCardRightText,
                                 ]}>
-                                {item.user_id}
+                                {/* {item.user_id} */}
                             </Text>
                         </View>
                     </View>
@@ -48,7 +61,7 @@ const InfoCard = ({item}) => {
                                     {textAlign: 'right'},
                                     styles.swipeCardRightText,
                                 ]}>
-                                {item.phone}
+                                {/* {item.phone} */}
                             </Text>
                         </View>
                     </View>
@@ -68,7 +81,7 @@ const InfoCard = ({item}) => {
                                     {textAlign: 'right'},
                                     styles.swipeCardRightText,
                                 ]}>
-                                {item.email}
+                                {/* {item.email} */}
                             </Text>
                         </View>
                     </View>
@@ -88,7 +101,7 @@ const InfoCard = ({item}) => {
                                     {textAlign: 'right'},
                                     styles.swipeCardRightText,
                                 ]}>
-                                {item.dob}
+                                {/* {item.dob} */}
                             </Text>
                         </View>
                     </View>
@@ -108,7 +121,7 @@ const InfoCard = ({item}) => {
                                     {textAlign: 'right'},
                                     styles.swipeCardRightText,
                                 ]}>
-                                {item.dob}
+                                {/* {item.dob} */}
                             </Text>
                         </View>
                     </View>
@@ -136,9 +149,9 @@ const InfoCard = ({item}) => {
                                 {textAlign: 'left'},
                                 styles.swipeCardLeftText,
                             ]}>
-                            {item.address},
+                            {/* {item.address},
                             {item.city},
-                            {item.country}
+                            {item.country} */}
                         </Text>
                     </View>
                 </CardView>
@@ -176,7 +189,6 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 'auto',
         justifyContent: 'center',
-        padding: 10,
         paddingLeft: 15,
         paddingRight: 15,
         alignItems: 'center',
@@ -189,7 +201,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'flex-start',
         borderBottomColor: '#e7e7e7',
-
         borderBottomWidth: 1,
         marginRight: 10,
         marginLeft: 10,

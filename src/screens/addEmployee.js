@@ -130,6 +130,17 @@ const AddEmployee = ({navigation}) => {
                                 setData({...data, project_title: text})
                             }
                             mode="outlined"
+                            label="Address"
+                            style={styles.textInput}
+                            autoCapitalize="none"
+                        />
+                    </View>
+                    <View style={styles.action}>
+                        <TextInput
+                            onChangeText={text =>
+                                setData({...data, project_title: text})
+                            }
+                            mode="outlined"
                             label="Department"
                             style={styles.textInput}
                             autoCapitalize="none"

@@ -13,9 +13,9 @@ import HeaderComponent from '../components/HeaderComponent';
 
 import DataService from '../services/dataService';
 
-const data = new Array(100)
-    .fill(0)
-    .map((a, i) => ({key: '' + i, value: 'item' + i}));
+// const data = new Array(100)
+//     .fill(0)
+//     .map((a, i) => ({key: '' + i, value: 'item' + i}));
 
 const EmployeeList = ({navigation}) => {
     const [dataSource, setDataSource] = useState(DataService.employeeList());
@@ -25,7 +25,6 @@ const EmployeeList = ({navigation}) => {
         navigation.navigate('Profile');
     };
 
-    const _keyExtractor = (item, index) => item.id;
     const _renderItem = ({item}) => (
         <View style={styles.cardView}>
             <TouchableOpacity style={styles.card} onPress={openProfile}>
@@ -112,7 +111,7 @@ const EmployeeList = ({navigation}) => {
                     maxToRenderPerBatch={1}
                     removeClippedSubviews={false}
                     numColumns={2}
-                    keyExtractor={_keyExtractor}
+                    keyExtractor={() => Math.random().toString(36).substr(2, 9)}
                     renderItem={_renderItem}
                 />
             </View>
