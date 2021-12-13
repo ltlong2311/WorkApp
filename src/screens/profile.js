@@ -20,8 +20,8 @@ import COLORS from '../consts/color';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import InfoCard from '../components/InfoCard';
 
-const ProfilePage = ({navigation, item}) => {
-    const [dataSource, setDataSource] = useState(DataService.employeeProfile());
+const ProfilePage = ({navigation, route}) => {
+    const employeeProfile = route.params.employee;
 
     return (
         <View style={styles.container}>
@@ -34,20 +34,20 @@ const ProfilePage = ({navigation, item}) => {
                             name="arrow-back"
                             size={25}
                             color={COLORS.white}
-                            onPress={() => navigation.navigate('EmployeeList')}
+                            onPress={navigation.goBack}
                         />
-                        <View
-                            onPress={() =>
-                                navigation.navigate('EditProfile', {
-                                    data: {},
-                                })
-                            }>
-                            <View>
+                        <View onPress={navigation.goBack}>
+                            <TouchableOpacity
+                                onPress={() =>
+                                    navigation.navigate('EditEmployee', {
+                                        employee: employeeProfile,
+                                    })
+                                }>
                                 <Image
                                     style={styles.editIcon}
                                     source={require('../assets/edit.png')}
                                 />
-                            </View>
+                            </TouchableOpacity>
                         </View>
                     </View>
                     <View style={styles.dashBoardCard}>
@@ -56,16 +56,16 @@ const ProfilePage = ({navigation, item}) => {
                             source={require('../assets/user.png')}
                         />
                         <Text style={styles.userName}>
-                            {dataSource.fullname}
+                            {employeeProfile.fullname}
                         </Text>
                         <Text style={styles.designation}>
-                            {dataSource.designation}
+                            {employeeProfile.designation}
                         </Text>
                     </View>
                 </LinearGradient>
             </View>
-            <View style={{flex: 6}}>
-                <InfoCard navigation={navigation} item={item} />
+            <View style={{flex: 6, marginTop: -10}}>
+                <InfoCard navigation={navigation} item={employeeProfile} />
             </View>
         </View>
     );

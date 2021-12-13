@@ -79,16 +79,14 @@ export const DrawerContent = props => {
                     <DrawerItem
                         icon={({color, size}) => (
                             <MaterialCommunityIcons
-                                name="briefcase"
+                                name="card-bulleted"
                                 color={color}
                                 size={size}
                             />
                         )}
-                        label="Project"
+                        label="Tasks"
                         onPress={() => {
-                            props.navigation.navigate('Project', {
-                                screen: 'SaveList',
-                            });
+                            props.navigation.navigate('TaskList');
                         }}
                     />
                     <DrawerItem
@@ -102,6 +100,19 @@ export const DrawerContent = props => {
                         label="Employees"
                         onPress={() => {
                             props.navigation.navigate('EmployeeList');
+                        }}
+                    />
+                    <DrawerItem
+                        icon={({color, size}) => (
+                            <MaterialCommunityIcons
+                                name="briefcase"
+                                color={color}
+                                size={size}
+                            />
+                        )}
+                        label="Project"
+                        onPress={() => {
+                            props.navigation.navigate('ProjectList');
                         }}
                     />
                     <DrawerItem

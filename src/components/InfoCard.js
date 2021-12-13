@@ -41,7 +41,7 @@ const InfoCard = ({item}) => {
                                     {textAlign: 'right'},
                                     styles.swipeCardRightText,
                                 ]}>
-                                {/* {item.user_id} */}
+                                {item.employee_id}
                             </Text>
                         </View>
                     </View>
@@ -61,7 +61,7 @@ const InfoCard = ({item}) => {
                                     {textAlign: 'right'},
                                     styles.swipeCardRightText,
                                 ]}>
-                                {/* {item.phone} */}
+                                {item.phone}
                             </Text>
                         </View>
                     </View>
@@ -81,7 +81,7 @@ const InfoCard = ({item}) => {
                                     {textAlign: 'right'},
                                     styles.swipeCardRightText,
                                 ]}>
-                                {/* {item.email} */}
+                                {item.email}
                             </Text>
                         </View>
                     </View>
@@ -92,7 +92,7 @@ const InfoCard = ({item}) => {
                                     {textAlign: 'left'},
                                     styles.swipeCardLeftText,
                                 ]}>
-                                Birthday
+                                Department
                             </Text>
                         </View>
                         <View style={styles.rightContainer}>
@@ -101,27 +101,7 @@ const InfoCard = ({item}) => {
                                     {textAlign: 'right'},
                                     styles.swipeCardRightText,
                                 ]}>
-                                {/* {item.dob} */}
-                            </Text>
-                        </View>
-                    </View>
-                    <View style={styles.taskRow}>
-                        <View style={styles.leftContainer}>
-                            <Text
-                                style={[
-                                    {textAlign: 'left'},
-                                    styles.swipeCardLeftText,
-                                ]}>
-                                Gender
-                            </Text>
-                        </View>
-                        <View style={styles.rightContainer}>
-                            <Text
-                                style={[
-                                    {textAlign: 'right'},
-                                    styles.swipeCardRightText,
-                                ]}>
-                                {/* {item.dob} */}
+                                {item.department}
                             </Text>
                         </View>
                     </View>
@@ -182,7 +162,6 @@ const styles = StyleSheet.create({
     },
     scene: {
         flex: 1,
-        marginTop: 20,
     },
     cardData: {
         backgroundColor: 'white',

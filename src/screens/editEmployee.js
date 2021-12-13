@@ -6,21 +6,57 @@ import {
     Button,
     ScrollView,
     Platform,
+    Alert,
 } from 'react-native';
 // import {Form, Item, Input, Label} from 'native-base';
 import Loading from '../components/loading';
 import {TextInput} from 'react-native-paper';
 import HeaderComponent from '../components/HeaderComponent';
 
+import {db} from '../../firebaseConnect';
+import {doc, setDoc, updateDoc} from 'firebase/firestore/lite';
+
 const EditEmployee = ({navigation, route}) => {
-    const [dataSource, setDataSource] = useState(route.params.employee);
+    const employeeProfile = route.params.employee;
     const [isLoading, setIsLoading] = useState(false);
-    const [data, setData] = useState({
-        project_title: route.params.employee.name,
-        start_date: '',
-        due_date: '',
-        estimate_hours: '',
+    const [employee, setEmployee] = useState({
+        username: employeeProfile.username,
+        email: employeeProfile.email,
+        fullname: employeeProfile.fullname,
+        phone: employeeProfile.phone,
+        address: employeeProfile.address,
+        department: employeeProfile.department,
+        designation: employeeProfile.designation,
     });
+
+    const ref = doc(db, 'employeeList',employeeProfile.id);
+
+    const alertMess = text =>
+        Alert.alert('Message', text, [
+            {text: 'OK', onPress: navigation.goBack(null)},
+        ]);
+
+    const handleCreateEmployee = async () => {
+        showLoading();
+        if (
+            employee.username !== '' &&
+            employee.fullname !== '' &&
+            employee.email !== ''
+        ) {
+            await updateDoc(ref, employee)
+                .then(() => {
+                    alertMess('Created successfully');
+                    hideLoading();
+                })
+                .catch(error => {
+                    console.log(error);
+                    hideLoading();
+                });
+        } else {
+            hideLoading();
+            Alert.alert('Alert', 'Some input fields cannot be empty!');
+        }
+    };
 
     const showLoading = () => {
         setIsLoading(true);
@@ -28,13 +64,6 @@ const EditEmployee = ({navigation, route}) => {
     const hideLoading = () => {
         setIsLoading(false);
     };
-    //navigate to screens
-    // const navigateScreen = viewId => {
-    //     const {navigate} = this.props.navigation;
-    //     navigate(viewId);
-    // };
-
-    const editEmp = () => {};
 
     return (
         <View style={styles.container}>
@@ -49,85 +78,94 @@ const EditEmployee = ({navigation, route}) => {
                     <View style={styles.action}>
                         <TextInput
                             onChangeText={text =>
-                                setData({...data, project_title: text})
+                                setEmployee({...employee, fullname: text})
                             }
                             mode="outlined"
                             label="Full name"
                             style={styles.textInput}
                             autoCapitalize="none"
+                            defaultValue={employee.fullname}
                         />
                     </View>
                     <View style={styles.action}>
                         <TextInput
                             onChangeText={text =>
-                                setData({...data, project_title: text})
+                                setEmployee({...employee, username: text})
                             }
                             mode="outlined"
                             label="Username"
                             style={styles.textInput}
                             autoCapitalize="none"
+                            defaultValue={employee.username}
                         />
                     </View>
                     <View style={styles.action}>
                         <TextInput
                             onChangeText={text =>
-                                setData({...data, project_title: text})
+                                setEmployee({...employee, phone: text})
                             }
                             mode="outlined"
                             label="Phone"
+                            keyboardType="numeric"
                             style={styles.textInput}
                             autoCapitalize="none"
+                            defaultValue={employee.phone}
                         />
                     </View>
                     <View style={styles.action}>
                         <TextInput
                             onChangeText={text =>
-                                setData({...data, project_title: text})
+                                setEmployee({...employee, email: text})
                             }
                             mode="outlined"
                             label="Email"
                             style={styles.textInput}
                             autoCapitalize="none"
+                            defaultValue={employee.email}
                         />
                     </View>
                     <View style={styles.action}>
                         <TextInput
                             onChangeText={text =>
-                                setData({...data, project_title: text})
+                                setEmployee({...employee, address: text})
                             }
                             mode="outlined"
                             label="Address"
                             style={styles.textInput}
                             autoCapitalize="none"
+                            defaultValue={employee.address}
                         />
                     </View>
                     <View style={styles.action}>
                         <TextInput
                             onChangeText={text =>
-                                setData({...data, project_title: text})
+                                setEmployee({...employee, department: text})
                             }
                             mode="outlined"
                             label="Department"
                             style={styles.textInput}
                             autoCapitalize="none"
+                            defaultValue={employee.department}
                         />
                     </View>
                     <View style={styles.action}>
                         <TextInput
                             onChangeText={text =>
-                                setData({...data, project_title: text})
+                                setEmployee({...employee, designation: text})
                             }
                             mode="outlined"
                             label="Designation"
                             style={styles.textInput}
                             autoCapitalize="none"
+                            defaultValue={employee.designation}
                         />
                     </View>
                 </View>
                 <View style={{paddingHorizontal: 15}}>
-                    <Button title="Edit Employee" onPress={editEmp} />
+                    <Button title="Edit" onPress={handleCreateEmployee} />
                 </View>
             </ScrollView>
+            {isLoading && <Loading />}
         </View>
     );
 };

@@ -110,8 +110,7 @@ const LoginPage = ({navigation}) => {
                         </TouchableOpacity>
                     </View>
                     <Text
-                        style={[styles.buttonContainer, styles.forgetPassword]}
-                        onPress={() => navigation.navigate('ForgotPassword')}>
+                        style={[styles.buttonContainer, styles.forgetPassword]}>
                         Forgot Password?
                     </Text>
                     <TouchableHighlight

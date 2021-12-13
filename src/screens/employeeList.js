@@ -12,6 +12,15 @@ import {
 import {useIsFocused} from '@react-navigation/native';
 import HeaderComponent from '../components/HeaderComponent';
 
+import {db} from '../../firebaseConnect';
+import {
+    collection,
+    deleteDoc,
+    doc,
+    getDoc,
+    getDocs,
+} from 'firebase/firestore/lite';
+
 import DataService from '../services/dataService';
 
 // const data = new Array(100)
@@ -19,23 +28,53 @@ import DataService from '../services/dataService';
 //     .map((a, i) => ({key: '' + i, value: 'item' + i}));
 
 const EmployeeList = ({navigation}) => {
-    const [dataSource, setDataSource] = useState(DataService.employeeList());
+    const [dataSource, setDataSource] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [isChange, setIsChange] = useState(false);
     const isFocused = useIsFocused();
-
-    const openProfile = () => {
-        navigation.navigate('Profile');
-    };
 
     useEffect(() => {
         fetchData();
-    }, [isFocused]);
+    }, [isFocused, isChange]);
 
-    const fetchData = () => {};
+    const fetchData = async () => {
+        const employeeCol = collection(db, 'employeeList');
+        const employeeSnapshot = await getDocs(employeeCol);
+        const employeeList = employeeSnapshot.docs.map(doc => doc.data());
+        setDataSource(employeeList);
+    };
+
+    const deleteEmp = async item => {
+        var ref = doc(db, 'employeeList', item.id);
+        const docSnap = await getDoc(ref);
+        if (!docSnap.exists()) {
+            Alert.alert('Message', 'not exits');
+        }
+
+        await deleteDoc(ref).then(() => {
+            setIsChange(!isChange);
+            // Alert.alert('Message', 'Deleted successfully');
+        })
+        .catch((error) => console.log(error));
+    };
+
+    const onDeleteEmp = item => {
+        Alert.alert('Alert', 'Are you sure?', [
+            {
+                text: 'Cancel',
+                onPress: () => console.log('Cancel Pressed'),
+            },
+            {text: 'Delete', onPress:() => deleteEmp(item)},
+        ]);
+    };
 
     const _renderItem = ({item}) => (
         <View style={styles.cardView}>
-            <TouchableOpacity style={styles.card} onPress={openProfile}>
+            <TouchableOpacity
+                style={styles.card}
+                onPress={() =>
+                    navigation.navigate('Profile', {employee: item})
+                }>
                 <View>
                     <CardView
                         style={styles.cardData}
@@ -54,10 +93,7 @@ const EmployeeList = ({navigation}) => {
                                                 },
                                             );
                                         } else {
-                                            Alert.alert(
-                                                'SmartHRMS',
-                                                'Deleted successfully',
-                                            );
+                                            onDeleteEmp(item);
                                         }
                                     }}>
                                     <MenuTrigger>

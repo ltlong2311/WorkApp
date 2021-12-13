@@ -46,11 +46,6 @@ const HeaderComponent = ({
                         onPress={
                             navigation.goBack
                         }
-                        // onPress={
-                        //     goBack
-                        //         ? () => navigation.navigate(goBack)
-                        //         : navigation.goBack
-                        // }
                     />
                 ) : (
                     <MaterialIcons

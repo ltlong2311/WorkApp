@@ -2,25 +2,32 @@ import React, {useEffect, useState} from 'react';
 import {TouchableOpacity, TouchableHighlight} from 'react-native';
 import {View, Text, Image, StyleSheet, Dimensions, Alert} from 'react-native';
 import CardView from 'react-native-cardview';
-import { useIsFocused } from '@react-navigation/native';
+import {useIsFocused} from '@react-navigation/native';
 import HeaderComponent from '../components/HeaderComponent';
 import DataService from '../services/dataService';
 import {SwipeListView} from 'react-native-swipe-list-view';
 import ProgressBarAnimated from 'react-native-progress-bar-animated';
 
 import {db} from '../../firebaseConnect';
-import {collection, getDocs} from 'firebase/firestore/lite';
-
+import {
+    collection,
+    getDocs,
+    deleteDoc,
+    doc,
+    getDoc,
+} from 'firebase/firestore/lite';
+import Loading from '../components/loading';
 
 const ProjectList = ({navigation}) => {
     // const [dataSource, setDataSource] = useState(DataService.projectList());
     const [dataSource, setDataSource] = useState([]);
+    const [isChange, setIsChange] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [progressCustomStyles, setProgressCustomStyles] = useState({
         backgroundColor: '#44bbec',
         borderRadius: 0,
         borderColor: '#fff',
     });
-    const [isLoading, setIsLoading] = useState(true);
     dataSource.forEach((value, key) => {
         dataSource[key].opentasks = 0;
         dataSource[key].completedtasks = 0;
@@ -38,7 +45,7 @@ const ProjectList = ({navigation}) => {
             GetData();
         });
         return willFocusSubscription;
-    }, []);
+    }, [isChange]);
 
     const GetData = async () => {
         const projectCol = collection(db, 'projectList');
@@ -47,27 +54,51 @@ const ProjectList = ({navigation}) => {
         setDataSource(projectList);
     };
 
+    const onDeleteProject = data => {
+        Alert.alert('Alert', 'Are you sure?', [
+            {
+                text: 'Cancel',
+                onPress: () => console.log('Cancel Pressed'),
+            },
+            {text: 'Delete', onPress: () => deleteProject(data)},
+        ]);
+    };
+
+    const deleteProject = async data => {
+        showLoading();
+        var ref = doc(db, 'projectList', data.item.id);
+        const docSnap = await getDoc(ref);
+        if (!docSnap.exists()) {
+            hideLoading();
+            Alert.alert('Message', 'not exits');
+        }
+
+        await deleteDoc(ref)
+            .then(() => {
+                hideLoading();
+                setIsChange(!isChange);
+                Alert.alert('Message', 'Deleted successfully');
+            })
+            .catch(error => {
+                hideLoading();
+                console.log(error);
+            });
+    };
+
+    const showLoading = () => {
+        setIsLoading(true);
+    };
+    const hideLoading = () => {
+        setIsLoading(false);
+    };
+
     // console.log('data', dataSource);
     const barWidth = Dimensions.get('screen').width - 30;
-
-    const openProjectView = project => {
-        navigation.navigate('ProjectView', {
-            project: project,
-        });
-    };
-    const editProject = data => {
-        navigation.navigate('EditProject', {});
-    };
-    const deleteProject = () => {
-        Alert.alert('SmartHRMS', 'Deleted successfully');
-    };
 
     const _keyExtractor = (item, index) => item.id;
     const _renderItem = ({item}) => (
         <View style={styles.cardView}>
-            <TouchableHighlight
-                style={styles.card}
-                onPress={() => openProjectView(item)}>
+            <TouchableHighlight style={styles.card}>
                 <View style={styles.card}>
                     <CardView
                         style={styles.cardData}
@@ -128,6 +159,7 @@ const ProjectList = ({navigation}) => {
                     </CardView>
                 </View>
             </TouchableHighlight>
+            {isLoading && <Loading />}
         </View>
     );
 
@@ -148,7 +180,7 @@ const ProjectList = ({navigation}) => {
                 keyExtractor={_keyExtractor}
                 renderItem={_renderItem}
                 maxToRenderPerBatch={1}
-                useNativeDriver={true}
+                useNativeDriver={false}
                 renderHiddenItem={(data, rowMap) => (
                     <View style={styles.rowBack}>
                         <TouchableOpacity
@@ -156,7 +188,11 @@ const ProjectList = ({navigation}) => {
                                 styles.backRightBtn,
                                 styles.backRightBtnLeft,
                             ]}
-                            onPress={editProject}>
+                            onPress={() =>
+                                navigation.navigate('EditProject', {
+                                    project: data,
+                                })
+                            }>
                             <Text style={styles.backTextWhite}>Edit</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
@@ -164,7 +200,7 @@ const ProjectList = ({navigation}) => {
                                 styles.backRightBtn,
                                 styles.backRightBtnRight,
                             ]}
-                            onPress={deleteProject}>
+                            onPress={() => onDeleteProject(data)}>
                             <Text style={styles.backTextWhite}>Delete</Text>
                         </TouchableOpacity>
                     </View>

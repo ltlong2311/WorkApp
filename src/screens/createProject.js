@@ -48,9 +48,7 @@ const CreateProject = ({navigation}) => {
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
 
-    const randomId = () => {
-        return Math.random().toString(36).substr(2, 11);
-    };
+    const randomId = Math.random().toString(36).substr(2, 11);
 
     const alertDate = text =>
         Alert.alert('Alert', text, [
@@ -58,7 +56,7 @@ const CreateProject = ({navigation}) => {
         ]);
 
     const handleCreateProject = async () => {
-        await setDoc(doc(db, 'projectList', randomId()), {
+        await setDoc(doc(db, 'projectList', randomId), {
             project_title: data.project_title,
             assign_lead: '1',
             start_date: data.start_date,
@@ -66,6 +64,7 @@ const CreateProject = ({navigation}) => {
             progress: 0,
             project_created: convertDateToString(now, 2),
             estimate_hours: data.estimate_hours,
+            id: randomId,
             tasks: [
                 {
                     task_detail: {
@@ -73,7 +72,7 @@ const CreateProject = ({navigation}) => {
                         task_name: 'Patient appointment booking ',
                         estimated_hours: 12,
                         description: 'test',
-                        task_progress: 0,
+                        task_progress: 90,
                         start_date: '2021-11-28',
                         due_date: '2021-11-29',
                         user_id: '1',
@@ -98,11 +97,13 @@ const CreateProject = ({navigation}) => {
                     assigned_to: [],
                 },
             ],
-        });
-    };
-
-    const back = () => {
-        return Math.random().toString(36).substr(2, 11);
+        })
+            .then(() => {
+                alertMess('Created successfully');
+            })
+            .catch(error => {
+                console.log(error);
+            });
     };
 
     const alertMess = text =>
@@ -112,8 +113,16 @@ const CreateProject = ({navigation}) => {
         ]);
 
     const onCreateProject = () => {
-        handleCreateProject();
-        alertMess('Deleted successfully');
+        if (
+            data.project_title !== '' &&
+            data.start_date !== '' &&
+            data.due_date !== '' &&
+            data.estimate_hours !== ''
+        ) {
+            handleCreateProject();
+        } else {
+            Alert.alert('Alert', 'Some input fields cannot be empty!');
+        }
     };
 
     const showDatePicker = () => {
@@ -214,9 +223,6 @@ const CreateProject = ({navigation}) => {
                     </View>
                     <View style={styles.action}>
                         <TextInput
-                            // onChangeText={text =>
-                            //     setData({...data, due_date: text})
-                            // }
                             label="Due date"
                             style={styles.textInput}
                             autoCapitalize="none"
@@ -237,6 +243,7 @@ const CreateProject = ({navigation}) => {
                                 setData({...data, estimate_hours: text})
                             }
                             label="Estimate time(hours)"
+                            keyboardType="numeric"
                             style={styles.textInput}
                             autoCapitalize="none"
                         />
