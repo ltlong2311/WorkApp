@@ -27,6 +27,8 @@ import CreateProject from './src/screens/createProject';
 import ProfilePage from './src/screens/profile';
 import AddEmployee from './src/screens/addEmployee';
 import EditEmployee from './src/screens/editEmployee';
+import AddTask from './src/screens/addTask';
+import ProjectTask from './src/screens/projectTask';
 
 const Stack = createStackNavigator();
 
@@ -47,7 +49,9 @@ const App = () => {
                 <Stack.Screen name="TaskView" component={TaskView} />
                 <Stack.Screen name="EditProject" component={EditProject} />
                 <Stack.Screen name="CreateProject" component={CreateProject} />
+                <Stack.Screen name="projectTask" component={ProjectTask} />
                 <Stack.Screen name="Profile" component={ProfilePage} />
+                <Stack.Screen name="AddTask" component={AddTask} />
             </Stack.Navigator>
         </NavigationContainer>
     );

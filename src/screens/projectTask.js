@@ -6,15 +6,17 @@ import HeaderComponent from '../components/HeaderComponent';
 import DataService from '../services/dataService';
 import {FlatList} from 'react-native-gesture-handler';
 import COLORS from '../consts/color';
+import {useIsFocused} from '@react-navigation/native';
 
-const TaskList = ({navigation}) => {
-    const [tasks, setTasks] = useState(DataService.taskList());
+const ProjectTask = ({navigation, route}) => {
+    const project = route.params.project;
     const [tabIndex, setTabIndex] = useState({
         selectedIndex: 0,
     });
-    const [allTasks, setAllTasks] = useState(tasks.tasks);
+    const [allTasks, setAllTasks] = useState(project.tasks);
     const [completedTasks, setCompletedTasks] = useState([]);
     const [openTasks, setOpenTasks] = useState([]);
+    const isFocused = useIsFocused();
 
     useEffect(() => {
         fetchData();
@@ -30,7 +32,6 @@ const TaskList = ({navigation}) => {
             } else {
                 openList.push(value);
             }
-            console.log(value);
         });
         setCompletedTasks(completedList);
         setOpenTasks(openList);
@@ -61,7 +62,8 @@ const TaskList = ({navigation}) => {
     };
     const _keyExtractor = (item, index) => item.id;
     const _renderItem = ({item}) => (
-        <TouchableOpacity onPress={() => navigation.navigate('TaskView')}>
+        <TouchableOpacity
+            onPress={() => navigation.navigate('TaskView', {task: item})}>
             <View style={styles.cardView}>
                 <CardView
                     style={styles.cardData}
@@ -86,8 +88,10 @@ const TaskList = ({navigation}) => {
         <View style={styles.container}>
             <HeaderComponent
                 back="true"
-                title="Task List"
+                title="Task"
+                add="true"
                 next="AddTask"
+                data={project}
                 goBack="Dashboard"
                 navigation={navigation}
             />
@@ -126,6 +130,8 @@ const TaskList = ({navigation}) => {
         </View>
     );
 };
+
+export default ProjectTask;
 
 const styles = StyleSheet.create({
     container: {
@@ -231,5 +237,3 @@ const styles = StyleSheet.create({
         backgroundColor: '#44bbec',
     },
 });
-
-export default TaskList;

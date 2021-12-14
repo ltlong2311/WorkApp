@@ -17,10 +17,11 @@ import {ScrollView} from 'react-native-gesture-handler';
 import CardView from 'react-native-cardview';
 import ProgressBarAnimated from 'react-native-progress-bar-animated';
 
-const TaskView = ({navigation}) => {
-    const [dataSource, setDataSource] = useState(
-        DataService.taskList().tasks[1],
-    );
+const TaskView = ({navigation, route}) => {
+    const task = route.params.task;
+    const [dataSource, setDataSource] = useState(route.params.task);
+    console.log('1', dataSource);
+    console.log('2', task);
     const [isLoading, setIsLoading] = useState(true);
     const [progressCustomStyles, setProgressCustomStyles] = useState({
         backgroundColor: '#44bbec',
@@ -69,7 +70,10 @@ const TaskView = ({navigation}) => {
                                         {textAlign: 'right'},
                                         styles.swipeCardRightText,
                                     ]}>
-                                    {dataSource.task_detail.end_time}
+                                    {dataSource.task_detail.end_time !== '' &&
+                                    dataSource.task_detail.end_time
+                                        ? dataSource.task_detail.end_time
+                                        : '---'}
                                 </Text>
                             </View>
                         </View>
@@ -130,7 +134,10 @@ const TaskView = ({navigation}) => {
                                         {textAlign: 'right'},
                                         styles.swipeCardRightText,
                                     ]}>
-                                    {dataSource.task_detail.due_date}
+                                    {dataSource.task_detail.end_date !== '' &&
+                                    dataSource.task_detail.end_date
+                                        ? dataSource.task_detail.end_date
+                                        : 'in process'}
                                 </Text>
                             </View>
                         </View>
@@ -150,7 +157,10 @@ const TaskView = ({navigation}) => {
                                         {textAlign: 'right'},
                                         styles.swipeCardRightText,
                                     ]}>
-                                    {dataSource.task_detail.fullname}
+                                    {dataSource.task_detail.fullname !== '' &&
+                                    dataSource.task_detail.fullname
+                                        ? dataSource.task_detail.fullname
+                                        : 'leader'}
                                 </Text>
                             </View>
                         </View>
@@ -209,10 +219,10 @@ const TaskView = ({navigation}) => {
 
                         <View style={styles.progressBar}>
                             <ProgressBarAnimated
-                                ba
                                 {...progressCustomStyles}
                                 width={barWidth}
                                 maxValue={100}
+                                useNativeDriver={false}
                                 value={dataSource.task_detail.task_progress}
                                 height={6}
                             />

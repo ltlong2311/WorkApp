@@ -65,38 +65,7 @@ const CreateProject = ({navigation}) => {
             project_created: convertDateToString(now, 2),
             estimate_hours: data.estimate_hours,
             id: randomId,
-            tasks: [
-                {
-                    task_detail: {
-                        t_id: 28,
-                        task_name: 'Patient appointment booking ',
-                        estimated_hours: 12,
-                        description: 'test',
-                        task_progress: 90,
-                        start_date: '2021-11-28',
-                        due_date: '2021-11-29',
-                        user_id: '1',
-                    },
-                    task_comment: [],
-                    task_files: [],
-                    assigned_to: [],
-                },
-                {
-                    task_detail: {
-                        t_id: 26,
-                        task_name: 'Appointment booking with payment gateway ',
-                        estimated_hours: 4,
-                        description: '',
-                        task_progress: 100,
-                        start_date: '2021-11-24',
-                        due_date: '2021-11-24',
-                        user_id: '2',
-                    },
-                    task_comment: [],
-                    task_files: [],
-                    assigned_to: [],
-                },
-            ],
+            tasks: [],
         })
             .then(() => {
                 alertMess('Created successfully');

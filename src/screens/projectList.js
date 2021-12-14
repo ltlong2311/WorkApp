@@ -1,6 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {TouchableOpacity, TouchableHighlight} from 'react-native';
-import {View, Text, Image, StyleSheet, Dimensions, Alert} from 'react-native';
+import {
+    View,
+    Text,
+    Image,
+    StyleSheet,
+    Dimensions,
+    Alert,
+    TouchableOpacity,
+} from 'react-native';
 import CardView from 'react-native-cardview';
 import {useIsFocused} from '@react-navigation/native';
 import HeaderComponent from '../components/HeaderComponent';
@@ -98,7 +105,12 @@ const ProjectList = ({navigation}) => {
     const _keyExtractor = (item, index) => item.id;
     const _renderItem = ({item}) => (
         <View style={styles.cardView}>
-            <TouchableHighlight style={styles.card}>
+            <TouchableOpacity
+                onPress={() =>
+                    navigation.navigate('projectTask', {project: item})
+                }
+                activeOpacity={0.95}
+                style={styles.card}>
                 <View style={styles.card}>
                     <CardView
                         style={styles.cardData}
@@ -158,7 +170,7 @@ const ProjectList = ({navigation}) => {
                         </View>
                     </CardView>
                 </View>
-            </TouchableHighlight>
+            </TouchableOpacity>
             {isLoading && <Loading />}
         </View>
     );
@@ -184,6 +196,7 @@ const ProjectList = ({navigation}) => {
                 renderHiddenItem={(data, rowMap) => (
                     <View style={styles.rowBack}>
                         <TouchableOpacity
+                            activeOpacity={0.3}
                             style={[
                                 styles.backRightBtn,
                                 styles.backRightBtnLeft,
@@ -196,6 +209,7 @@ const ProjectList = ({navigation}) => {
                             <Text style={styles.backTextWhite}>Edit</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
+                            actionOpacity={0.3}
                             style={[
                                 styles.backRightBtn,
                                 styles.backRightBtnRight,

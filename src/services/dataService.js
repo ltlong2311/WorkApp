@@ -1845,7 +1845,7 @@ class DataService extends React.Component {
                         estimated_hours: '4.00',
                         description:
                             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum dui nisi, venenatis eu ante sed, aliquam pharetra metus. Aliquam erat volutpat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec felis justo, gravida non fermentum quis',
-                        task_progress: '80',
+                        task_progress: 80,
                         start_date: '2018-11-24',
                         due_date: '2018-11-24',
                         user_id: '2',
@@ -1865,7 +1865,7 @@ class DataService extends React.Component {
                         task_name: 'Testing site',
                         estimated_hours: '2.00',
                         description: '',
-                        task_progress: '100',
+                        task_progress: 100,
                         start_date: '2018-05-29',
                         due_date: '2018-05-29',
                         user_id: '0',

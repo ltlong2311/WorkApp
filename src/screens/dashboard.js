@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import {
     View,
     StyleSheet,
@@ -27,6 +27,9 @@ import COLORS from '../consts/color';
 // import HeaderNav from '../components/HeaderNav';
 
 const Dashboard = ({navigation, route}) => {
+
+    const [empTotal, setEmpTotal] = useState();
+    const [projectTotal, setProjectTotal] = useState();
     const employeeList = () => {
         navigation.navigate('EmployeeList');
     };
@@ -109,7 +112,7 @@ const Dashboard = ({navigation, route}) => {
                                 size={35}
                                 color="#008fc9"
                             />
-                            <Text style={styles.cardQuantity}>70</Text>
+                            <Text style={styles.cardQuantity}>{empTotal}</Text>
                             <Text style={styles.cardTitle}>Employees</Text>
                         </CardView>
                     </TouchableOpacity>
@@ -125,7 +128,7 @@ const Dashboard = ({navigation, route}) => {
                                 fontWeight="600"
                                 color="#008fc9"
                             />
-                            <Text style={styles.cardQuantity}>60</Text>
+                            <Text style={styles.cardQuantity}>{projectTotal}</Text>
                             <Text style={styles.cardTitle}>Project</Text>
                         </CardView>
                     </TouchableOpacity>
