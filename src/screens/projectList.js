@@ -134,7 +134,7 @@ const ProjectList = ({navigation}) => {
                                     {textAlign: 'left'},
                                     styles.invoiceCompany,
                                 ]}>
-                                {item.opentasks} in progress tasks,
+                                {item.opentasks} tasks in progress,
                                 {item.completedtasks} tasks completed
                             </Text>
                         </View>

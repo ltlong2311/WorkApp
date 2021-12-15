@@ -7,31 +7,57 @@ import DataService from '../services/dataService';
 import {FlatList} from 'react-native-gesture-handler';
 import COLORS from '../consts/color';
 
+import {db} from '../../firebaseConnect';
+import {
+    collection,
+    getDocs,
+} from 'firebase/firestore/lite';
+
 const TaskList = ({navigation}) => {
-    const [tasks, setTasks] = useState(DataService.taskList());
+    // const [tasks, setTasks] = useState(DataService.taskList());
     const [tabIndex, setTabIndex] = useState({
         selectedIndex: 0,
     });
-    const [allTasks, setAllTasks] = useState(tasks.tasks);
+    const [allTasks, setAllTasks] = useState([]);
     const [completedTasks, setCompletedTasks] = useState([]);
     const [openTasks, setOpenTasks] = useState([]);
 
     useEffect(() => {
-        fetchData();
+        getData();
+        const willFocusSubscription = navigation.addListener('focus', () => {
+            getData();
+        });
+        return willFocusSubscription;
     }, []);
 
-    const fetchData = () => {
+    const getData = async () => {
+        const projectCol = collection(db, 'projectList');
+        const projectSnapshot = await getDocs(projectCol);
+        const projectList = projectSnapshot.docs.map(doc => doc.data());
+        const taskList = [];
         const completedList = [];
         const openList = [];
-
-        allTasks.forEach((value, key) => {
-            if (value.task_detail.task_progress === 100) {
-                completedList.push(value);
-            } else {
-                openList.push(value);
+        projectList.forEach((value, key) => {
+            if (value.tasks && value.tasks.length > 0) {
+                Array.prototype.push.apply(taskList, value.tasks);
+                value.tasks.forEach((val, k) => {
+                    if (val.task_detail.task_progress === 100) {
+                        completedList.push(val);
+                    } else {
+                        openList.push(val);
+                    }
+                });
             }
-            console.log(value);
         });
+        // taskList.forEach((value, key) => {
+        //     if (value.task_detail.task_progress === 100) {
+        //         completedList.push(value);
+        //     } else {
+        //         openList.push(value);
+        //     }
+        //     console.log(value);
+        // });
+        setAllTasks(taskList);
         setCompletedTasks(completedList);
         setOpenTasks(openList);
     };
