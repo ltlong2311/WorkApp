@@ -8,8 +8,11 @@ import LinearGradient from 'react-native-linear-gradient';
 import COLORS from '../consts/color';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-export const DrawerContent = props => {
+export const UserDrawerContent = props => {
     const [isDarkTheme, setIsDarkTheme] = useState(false);
+    const [userInfo, setUserInfo] = useState(props.userInfo);
+
+    useEffect(() => {}, []);
 
     const logOut = () => {
         props.navigation.push('Login');
@@ -47,7 +50,10 @@ export const DrawerContent = props => {
                                     marginLeft: 15,
                                 }}>
                                 <Text style={styles.tittle}>
-                                    Leader
+                                    {userInfo.fullname}
+                                </Text>
+                                <Text style={styles.caption}>
+                                    {userInfo.email}
                                 </Text>
                             </View>
                         </View>
@@ -81,19 +87,6 @@ export const DrawerContent = props => {
                         label="Tasks"
                         onPress={() => {
                             props.navigation.navigate('TaskList');
-                        }}
-                    />
-                    <DrawerItem
-                        icon={({color, size}) => (
-                            <MaterialCommunityIcons
-                                name="account-group"
-                                color={color}
-                                size={size}
-                            />
-                        )}
-                        label="Employees"
-                        onPress={() => {
-                            props.navigation.navigate('EmployeeList');
                         }}
                     />
                     <DrawerItem

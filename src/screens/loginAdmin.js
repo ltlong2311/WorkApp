@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {
     StyleSheet,
     Text,
@@ -12,34 +12,25 @@ import {
     ScrollView,
     Platform,
     Alert,
+    Dimensions,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
+import {authentication} from '../../firebaseConnect';
+import {signInWithEmailAndPassword} from 'firebase/auth';
 
 import Loading from '../components/loading';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {db} from '../../firebaseConnect';
-import {collection, getDocs} from 'firebase/firestore/lite';
 
-const LoginPage = ({navigation}) => {
-    const [empList, setEmpList] = useState([]);
-    // const [emp, setEmp] = useState({});
+const {width} = Dimensions.get('screen');
+
+const LoginAdminPage = ({navigation}) => {
     const [loginData, setLoginData] = useState({
-        username: '',
+        email: '',
         password: '',
     });
     const [loading, setLoading] = useState(false);
     const [secureTextEntry, setSecureTextEntry] = useState(true);
-
-    useEffect(() => {
-        fetchData();
-    }, []);
-
-    const fetchData = async () => {
-        const employeeCol = collection(db, 'employeeList');
-        const employeeSnapshot = await getDocs(employeeCol);
-        const employeeList = employeeSnapshot.docs.map(doc => doc.data());
-        setEmpList(employeeList);
-    };
 
     const updateSecureTextEntry = () => {
         setSecureTextEntry(!secureTextEntry);
@@ -53,33 +44,34 @@ const LoginPage = ({navigation}) => {
         setLoading(false);
     };
 
-    const onLogin = () => {
-        if (loginData.username !== '' && loginData.password !== '') {
-            handleLogin();
-        } else {
-            Alert.alert('Message', 'Please enter full username and password!');
-        }
-    };
+    // const login = () => {
+    //     setTimeout(() => {
+    //         hideLoading;
+    //         navigation.navigate('Home');
+    //     }, 200);
+    //     showLoading;
+    // };
+
     const handleLogin = () => {
-        var emp = {};
-        empList.forEach(val => {
-            if (
-                val.username === loginData.username ||
-                val.email === loginData.username
-            ) {
-                emp = val;
-            }
-        });
-        if (emp && Object.keys(emp).length === 0) {
-            Alert.alert('Message', 'Username or email does not exist!');
-        } else if (emp.password === loginData.password) {
-            navigation.navigate('UserHome', {userInfo: emp});
-        } else {
-            Alert.alert('Message', 'The password you entered is incorrect');
-        }
+        showLoading();
+        signInWithEmailAndPassword(
+            authentication,
+            loginData.email,
+            loginData.password,
+        )
+            .then(res => {
+                console.log(res);
+                hideLoading();
+                navigation.navigate('Home');
+            })
+            .catch(error => {
+                console.log(error);
+                hideLoading();
+            });
     };
-    const leaderLogin = () => {
-        navigation.navigate('LoginAdmin');
+
+    const register = () => {
+        navigation.navigate('RegisterPage');
     };
 
     return (
@@ -89,7 +81,7 @@ const LoginPage = ({navigation}) => {
                 backgroundColor="transparent"
                 barStyle="dark-content"
             />
-            <SafeAreaView>
+            <SafeAreaView style={{flex: 1}}>
                 <View style={styles.logocontainer}>
                     <Image
                         style={styles.logo}
@@ -104,12 +96,13 @@ const LoginPage = ({navigation}) => {
                         <TextInput
                             style={styles.inputs}
                             placeholderTextColor="#a19797"
-                            placeholder="Username or email address"
+                            placeholder="Email"
                             secureTextEntry={true}
+                            keyboardType="email-address"
                             underlineColorAndroid="transparent"
                             autoCapitalize="none"
-                            onChangeText={username =>
-                                setLoginData({...loginData, username: username})
+                            onChangeText={email =>
+                                setLoginData({...loginData, email: email})
                             }
                         />
                     </View>
@@ -148,14 +141,21 @@ const LoginPage = ({navigation}) => {
                     </Text>
                     <TouchableHighlight
                         style={[styles.buttonContainer, styles.loginButton]}
-                        onPress={onLogin}>
+                        onPress={handleLogin}>
                         <Text style={styles.loginText}>Login</Text>
                     </TouchableHighlight>
 
                     <Text
                         style={[styles.buttonContainer, styles.register]}
-                        onPress={leaderLogin}>
-                        Are you a leader? Click
+                        onPress={register}>
+                        Don't have an account? Register
+                    </Text>
+                </View>
+                <View style={styles.return}>
+                    <Text
+                        style={[styles.buttonContainer, styles.returnText]}
+                        onPress={() => navigation.navigate('Login')}>
+                        Return to employee login page
                     </Text>
                 </View>
             </SafeAreaView>
@@ -164,7 +164,7 @@ const LoginPage = ({navigation}) => {
     );
 };
 
-export default LoginPage;
+export default LoginAdminPage;
 
 const styles = StyleSheet.create({
     container: {
@@ -238,6 +238,16 @@ const styles = StyleSheet.create({
     register: {
         textAlign: 'center',
         color: '#000000',
+    },
+    return: {
+        width: width,
+        position: 'absolute',
+        bottom: 0,
+    },
+    returnText: {
+        textAlign: 'center',
+        alignSelf: 'center',
+        color: '#44bbec',
     },
     loginButton: {
         backgroundColor: '#44bbec',

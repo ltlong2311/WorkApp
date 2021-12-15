@@ -35,6 +35,7 @@ const TaskView = ({navigation, route}) => {
             <HeaderComponent
                 back="true"
                 noIcon="true"
+                assign={true}
                 title={dataSource.task_detail.task_name}
                 navigation={navigation}
             />

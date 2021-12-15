@@ -20,7 +20,7 @@ import EditProject from './src/screens/editProject';
 //navigation
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer, LightTheme} from '@react-navigation/native';
-import DrawerNavigator from './src/navigation/DrawerNavigator';
+import {DrawerNavigator, UserDrawerNavigator} from './src/navigation/DrawerNavigator';
 import TaskView from './src/screens/taskView';
 import TaskList from './src/screens/taskList';
 import CreateProject from './src/screens/createProject';
@@ -29,7 +29,8 @@ import AddEmployee from './src/screens/addEmployee';
 import EditEmployee from './src/screens/editEmployee';
 import AddTask from './src/screens/addTask';
 import ProjectTask from './src/screens/projectTask';
-
+import LoginAdminPage from './src/screens/loginAdmin';
+import UserDashboard from './src/screens/userDashboard';
 const Stack = createStackNavigator();
 
 const App = () => {
@@ -38,8 +39,9 @@ const App = () => {
             <StatusBar translucent backgroundColor="transparent" />
             <Stack.Navigator screenOptions={{headerShown: false}}>
                 <Stack.Screen name="Login" component={LoginPage} />
+                <Stack.Screen name="LoginAdmin" component={LoginAdminPage} />
                 <Stack.Screen name="Home" component={DrawerNavigator} />
-                <Stack.Screen name="Dashboard" component={Dashboard} />
+                <Stack.Screen name="UserHome" component={UserDrawerNavigator} />
                 <Stack.Screen name="RegisterPage" component={RegisterPage} />
                 <Stack.Screen name="EmployeeList" component={EmployeeList} />
                 <Stack.Screen name="AddEmployee" component={AddEmployee} />

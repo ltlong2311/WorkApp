@@ -24,7 +24,7 @@ const HeaderComponent = ({
     edit,
     next,
     data,
-    goBack,
+    assign,
     transparentBG,
 }) => {
     return (
@@ -83,6 +83,15 @@ const HeaderComponent = ({
                         onPress={() => navigation.push(next, {data: data})}>
                         <MaterialCommunityIcons
                             name="plus"
+                            size={28}
+                            color={COLORS.white}
+                        />
+                    </TouchableOpacity>
+                ) : assign ? (
+                    <TouchableOpacity
+                        onPress={() => navigation.push(next, {data: data})}>
+                        <MaterialCommunityIcons
+                            name="account-arrow-left"
                             size={28}
                             color={COLORS.white}
                         />
