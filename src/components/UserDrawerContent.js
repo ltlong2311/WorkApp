@@ -86,7 +86,7 @@ export const UserDrawerContent = props => {
                         )}
                         label="Tasks"
                         onPress={() => {
-                            props.navigation.navigate('TaskList');
+                            props.navigation.navigate('TaskList', {isLead: false});
                         }}
                     />
                     <DrawerItem
@@ -99,7 +99,7 @@ export const UserDrawerContent = props => {
                         )}
                         label="Project"
                         onPress={() => {
-                            props.navigation.navigate('ProjectList');
+                            props.navigation.navigate('ProjectList', {isLead: false});
                         }}
                     />
                     <DrawerItem
@@ -112,9 +112,7 @@ export const UserDrawerContent = props => {
                         )}
                         label="Note"
                         onPress={() => {
-                            props.navigation.navigate('User', {
-                                screen: 'SaveList',
-                            });
+                            props.navigation.navigate('User');
                         }}
                     />
                 </Drawer.Section>

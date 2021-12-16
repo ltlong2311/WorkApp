@@ -25,8 +25,8 @@ import {
 } from 'firebase/firestore/lite';
 import Loading from '../components/loading';
 
-const ProjectList = ({navigation}) => {
-    // const [dataSource, setDataSource] = useState(DataService.projectList());
+const ProjectList = ({navigation, route}) => {
+    const isLead = route.params.isLead;
     const [dataSource, setDataSource] = useState([]);
     const [isChange, setIsChange] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -180,7 +180,7 @@ const ProjectList = ({navigation}) => {
             <HeaderComponent
                 back="true"
                 title="Project List"
-                add="true"
+                add={isLead}
                 goBack="Dashboard"
                 next="CreateProject"
                 navigation={navigation}
@@ -194,7 +194,7 @@ const ProjectList = ({navigation}) => {
                 maxToRenderPerBatch={1}
                 useNativeDriver={false}
                 renderHiddenItem={(data, rowMap) => (
-                    <View style={styles.rowBack}>
+                    isLead && <View style={styles.rowBack}>
                         <TouchableOpacity
                             activeOpacity={0.3}
                             style={[

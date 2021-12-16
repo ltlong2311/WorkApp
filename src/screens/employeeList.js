@@ -27,7 +27,8 @@ import DataService from '../services/dataService';
 //     .fill(0)
 //     .map((a, i) => ({key: '' + i, value: 'item' + i}));
 
-const EmployeeList = ({navigation}) => {
+const EmployeeList = ({navigation, route}) => {
+    const isLead = route.params.isLead;
     const [dataSource, setDataSource] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isChange, setIsChange] = useState(false);
@@ -144,7 +145,7 @@ const EmployeeList = ({navigation}) => {
                 <HeaderComponent
                     back="true"
                     title="Employee List"
-                    add="true"
+                    add={isLead}
                     next="AddEmployee"
                     goBack="Dashboard"
                     navigation={navigation}

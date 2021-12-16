@@ -26,13 +26,13 @@ const Dashboard = ({navigation, route}) => {
     const [projectTotal, setProjectTotal] = useState();
     const [taskTotal, setTaskTotal] = useState();
     const employeeList = () => {
-        navigation.navigate('EmployeeList');
+        navigation.navigate('EmployeeList', {isLead: true});
     };
     const TaskList = () => {
-        navigation.navigate('TaskList');
+        navigation.navigate('TaskList', {isLead: true});
     };
     const projectList = () => {
-        navigation.navigate('ProjectList');
+        navigation.navigate('ProjectList', {isLead: true});
     };
 
     useEffect(() => {

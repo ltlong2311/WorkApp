@@ -80,7 +80,7 @@ export const DrawerContent = props => {
                         )}
                         label="Tasks"
                         onPress={() => {
-                            props.navigation.navigate('TaskList');
+                            props.navigation.navigate('TaskList', {isLead: true});
                         }}
                     />
                     <DrawerItem
@@ -93,7 +93,7 @@ export const DrawerContent = props => {
                         )}
                         label="Employees"
                         onPress={() => {
-                            props.navigation.navigate('EmployeeList');
+                            props.navigation.navigate('EmployeeList', {isLead: true});
                         }}
                     />
                     <DrawerItem
@@ -106,7 +106,7 @@ export const DrawerContent = props => {
                         )}
                         label="Project"
                         onPress={() => {
-                            props.navigation.navigate('ProjectList');
+                            props.navigation.navigate('ProjectList', {isLead: true});
                         }}
                     />
                     <DrawerItem

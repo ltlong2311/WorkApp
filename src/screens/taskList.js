@@ -13,8 +13,8 @@ import {
     getDocs,
 } from 'firebase/firestore/lite';
 
-const TaskList = ({navigation}) => {
-    // const [tasks, setTasks] = useState(DataService.taskList());
+const TaskList = ({navigation, route}) => {
+    const isLead = route.params.isLead;
     const [tabIndex, setTabIndex] = useState({
         selectedIndex: 0,
     });
@@ -49,14 +49,6 @@ const TaskList = ({navigation}) => {
                 });
             }
         });
-        // taskList.forEach((value, key) => {
-        //     if (value.task_detail.task_progress === 100) {
-        //         completedList.push(value);
-        //     } else {
-        //         openList.push(value);
-        //     }
-        //     console.log(value);
-        // });
         setAllTasks(taskList);
         setCompletedTasks(completedList);
         setOpenTasks(openList);
@@ -87,7 +79,7 @@ const TaskList = ({navigation}) => {
     };
     const _keyExtractor = (item, index) => item.id;
     const _renderItem = ({item}) => (
-        <TouchableOpacity onPress={() => navigation.navigate('TaskView')}>
+        <TouchableOpacity onPress={() => navigation.navigate('TaskView', {task: item})}>
             <View style={styles.cardView}>
                 <CardView
                     style={styles.cardData}

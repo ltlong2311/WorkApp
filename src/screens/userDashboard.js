@@ -27,14 +27,14 @@ const UserDashboard = ({navigation, route}) => {
     const [empTotal, setEmpTotal] = useState();
     const [projectTotal, setProjectTotal] = useState();
     const [taskTotal, setTaskTotal] = useState();
-    const employeeList = () => {
-        navigation.navigate('EmployeeList');
+    const account = () => {
+        console.log('account');
     };
     const TaskList = () => {
-        navigation.navigate('TaskList');
+        navigation.navigate('TaskList', {isLead: false});
     };
     const projectList = () => {
-        navigation.navigate('ProjectList');
+        navigation.navigate('ProjectList', {isLead: false});
     };
 
     return (
@@ -115,7 +115,7 @@ const UserDashboard = ({navigation, route}) => {
                     <TouchableOpacity
                         activeOpacity={0.8}
                         style={styles.card}
-                        onPress={employeeList}>
+                        onPress={account}>
                         <CardView
                             style={styles.cardData}
                             cardElevation={2}

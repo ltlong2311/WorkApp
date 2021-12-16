@@ -19,6 +19,7 @@ import ProgressBarAnimated from 'react-native-progress-bar-animated';
 
 const TaskView = ({navigation, route}) => {
     const task = route.params.task;
+    console.log(task);
     const [dataSource, setDataSource] = useState(route.params.task);
     console.log('1', dataSource);
     console.log('2', task);
