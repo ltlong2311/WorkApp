@@ -17,6 +17,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 
 import Loading from '../components/loading';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {db} from '../../firebaseConnect';
 import {collection, getDocs} from 'firebase/firestore/lite';
 

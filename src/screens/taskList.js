@@ -122,20 +122,20 @@ const TaskList = ({navigation, route}) => {
                 {tabIndex.selectedIndex === 0 ? (
                     <FlatList
                         data={openTasks}
-                        keyExtractor={_keyExtractor}
+                        keyExtractor={() => Math.random().toString(36).substr(2, 9)}
                         renderItem={_renderItem}
                     />
                 ) : tabIndex.selectedIndex === 1 ? (
                     <FlatList
                         data={completedTasks}
                         renderItem={_renderItem}
-                        keyExtractor={_keyExtractor}
+                        keyExtractor={() => Math.random().toString(36).substr(2, 9)}
                     />
                 ) : tabIndex.selectedIndex === 2 ? (
                     <FlatList
                         data={allTasks}
                         renderItem={_renderItem}
-                        keyExtractor={_keyExtractor}
+                        keyExtractor={() => Math.random().toString(36).substr(2, 9)}
                     />
                 ) : (
                     <></>

@@ -21,12 +21,6 @@ import {
     getDocs,
 } from 'firebase/firestore/lite';
 
-import DataService from '../services/dataService';
-
-// const data = new Array(100)
-//     .fill(0)
-//     .map((a, i) => ({key: '' + i, value: 'item' + i}));
-
 const EmployeeList = ({navigation, route}) => {
     const isLead = route.params.isLead;
     const [dataSource, setDataSource] = useState([]);

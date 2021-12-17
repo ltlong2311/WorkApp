@@ -19,10 +19,7 @@ import ProgressBarAnimated from 'react-native-progress-bar-animated';
 
 const TaskView = ({navigation, route}) => {
     const task = route.params.task;
-    console.log(task);
     const [dataSource, setDataSource] = useState(route.params.task);
-    console.log('1', dataSource);
-    console.log('2', task);
     const [isLoading, setIsLoading] = useState(true);
     const [progressCustomStyles, setProgressCustomStyles] = useState({
         backgroundColor: '#44bbec',
@@ -37,6 +34,8 @@ const TaskView = ({navigation, route}) => {
                 back="true"
                 noIcon="true"
                 assign={true}
+                next="TaskAssign"
+                data={task}
                 title={dataSource.task_detail.task_name}
                 navigation={navigation}
             />

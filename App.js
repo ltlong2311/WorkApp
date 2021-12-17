@@ -1,14 +1,9 @@
 import React from 'react';
 import {
-    SafeAreaView,
-    ScrollView,
     StatusBar,
     StyleSheet,
-    Text,
-    useColorScheme,
-    View,
 } from 'react-native';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 //pages
 import LoginPage from './src/screens/login';
 import Dashboard from './src/screens/dashboard';
@@ -31,6 +26,7 @@ import AddTask from './src/screens/addTask';
 import ProjectTask from './src/screens/projectTask';
 import LoginAdminPage from './src/screens/loginAdmin';
 import UserDashboard from './src/screens/userDashboard';
+import TaskAssign from './src/screens/taskAssgin';
 const Stack = createStackNavigator();
 
 const App = () => {
@@ -49,6 +45,7 @@ const App = () => {
                 <Stack.Screen name="ProjectList" component={ProjectList} />
                 <Stack.Screen name="TaskList" component={TaskList} />
                 <Stack.Screen name="TaskView" component={TaskView} />
+                <Stack.Screen name="TaskAssign" component={TaskAssign} />
                 <Stack.Screen name="EditProject" component={EditProject} />
                 <Stack.Screen name="CreateProject" component={CreateProject} />
                 <Stack.Screen name="projectTask" component={ProjectTask} />

@@ -81,6 +81,7 @@ const AddTask = ({navigation, route}) => {
             task_comment: [],
             task_files: [],
             assigned_to: [],
+            p_id: project.id,
         };
         tasks.push(task);
         await updateDoc(ref, {
