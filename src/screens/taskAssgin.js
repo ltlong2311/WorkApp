@@ -73,11 +73,11 @@ const TaskAssign = ({navigation, route}) => {
         newTasks.forEach((val, key) => {
             if (val.task_detail.t_id === task.task_detail.t_id) {
                 // newTasks[key].assigned_to.push(item); // assigned to many employees
-                newTasks[key].assigned_to = item;  // a task assigned to only one employee
+                newTasks[key].assigned_to = item; // a task assigned to only one employee
             }
-            console.log("item", typeof task.t_id);
-            console.log("item", val.task_detail.t_id);
-            console.log("item2", newTasks[key].assigned_to);
+            console.log('item', typeof task.t_id);
+            console.log('item', val.task_detail.t_id);
+            console.log('item2', newTasks[key].assigned_to);
         });
         assign(newTasks);
     };
@@ -88,8 +88,8 @@ const TaskAssign = ({navigation, route}) => {
             tasks: newTasks,
         })
             .then(() => {
-                alertMess("Assigned success");
-                console.log("newTask", newTasks);
+                alertMess('Assigned success');
+                console.log('newTask', newTasks);
                 hideLoading();
             })
             .catch(error => {
