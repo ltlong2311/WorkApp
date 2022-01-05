@@ -24,6 +24,15 @@ import {collection, getDocs} from 'firebase/firestore/lite';
 const LoginPage = ({navigation}) => {
     const [empList, setEmpList] = useState([]);
     // const [emp, setEmp] = useState({});
+
+    const storeData = async (key, value) => {
+        try {
+            const jsonValue = JSON.stringify(value);
+            await AsyncStorage.setItem(key, jsonValue);
+        } catch (e) {
+            console.log(e);
+        }
+    };
     const [loginData, setLoginData] = useState({
         username: '',
         password: '',
@@ -75,6 +84,7 @@ const LoginPage = ({navigation}) => {
             Alert.alert('Message', 'Username or email does not exist!');
         } else if (emp.password === loginData.password) {
             navigation.navigate('UserHome', {userInfo: emp});
+            storeData("userInfo", emp);
         } else {
             Alert.alert('Message', 'The password you entered is incorrect');
         }

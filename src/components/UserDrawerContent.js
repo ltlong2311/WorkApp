@@ -7,6 +7,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import LinearGradient from 'react-native-linear-gradient';
 import COLORS from '../consts/color';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const UserDrawerContent = props => {
     const [isDarkTheme, setIsDarkTheme] = useState(false);
@@ -16,6 +17,17 @@ export const UserDrawerContent = props => {
 
     const logOut = () => {
         props.navigation.push('Login');
+        removeValue("userInfo");
+    };
+
+    const removeValue = async key => {
+        try {
+            await AsyncStorage.removeItem(key);
+        } catch (e) {
+            console.log(e);
+        }
+
+        console.log('Done.');
     };
 
     return (
@@ -86,7 +98,9 @@ export const UserDrawerContent = props => {
                         )}
                         label="Tasks"
                         onPress={() => {
-                            props.navigation.navigate('TaskList', {isLead: false});
+                            props.navigation.navigate('TaskList', {
+                                isLead: false,
+                            });
                         }}
                     />
                     <DrawerItem
@@ -99,7 +113,9 @@ export const UserDrawerContent = props => {
                         )}
                         label="Project"
                         onPress={() => {
-                            props.navigation.navigate('ProjectList', {isLead: false});
+                            props.navigation.navigate('ProjectList', {
+                                isLead: false,
+                            });
                         }}
                     />
                     <DrawerItem

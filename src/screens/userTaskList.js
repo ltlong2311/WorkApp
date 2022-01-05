@@ -11,11 +11,21 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {db} from '../../firebaseConnect';
 import {collection, getDocs} from 'firebase/firestore/lite';
 
-const TaskList = ({navigation, route}) => {
+const getDataStore = async key => {
+    try {
+        const jsonValue = await AsyncStorage.getItem(key);
+        return jsonValue != null ? JSON.parse(jsonValue) : null;
+    } catch (e) {
+       console.log(e);
+    }
+};
+
+const UserTaskList = ({navigation, route}) => {
     const isLead = route.params.isLead;
     const [tabIndex, setTabIndex] = useState({
         selectedIndex: 0,
     });
+    const userInfo = getDataStore("userInfo");
     const [allTasks, setAllTasks] = useState([]);
     const [completedTasks, setCompletedTasks] = useState([]);
     const [openTasks, setOpenTasks] = useState([]);
@@ -34,20 +44,26 @@ const TaskList = ({navigation, route}) => {
         const projectList = projectSnapshot.docs.map(doc => doc.data());
         const taskList = [];
         const completedList = [];
+        const allList = [];
         const openList = [];
+        const userID = userInfo._W.id;
+        console.log(userID);
         projectList.forEach((value, key) => {
             if (value.tasks && value.tasks.length > 0) {
                 Array.prototype.push.apply(taskList, value.tasks);
                 value.tasks.forEach((val, k) => {
-                    if (val.task_detail.task_progress === 100) {
-                        completedList.push(val);
-                    } else {
-                        openList.push(val);
+                    if (val.assigned_to.id === userID){
+                        if (val.task_detail.task_progress === 100) {
+                            completedList.push(val);
+                        } else {
+                            openList.push(val);
+                        }
+                        allList.push(val);
                     }
                 });
             }
         });
-        setAllTasks(taskList);
+        setAllTasks(allList);
         setCompletedTasks(completedList);
         setOpenTasks(openList);
     };
@@ -255,4 +271,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default TaskList;
+export default UserTaskList;

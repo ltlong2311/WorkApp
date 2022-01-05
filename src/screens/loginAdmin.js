@@ -44,14 +44,6 @@ const LoginAdminPage = ({navigation}) => {
         setLoading(false);
     };
 
-    // const login = () => {
-    //     setTimeout(() => {
-    //         hideLoading;
-    //         navigation.navigate('Home');
-    //     }, 200);
-    //     showLoading;
-    // };
-
     const handleLogin = () => {
         showLoading();
         signInWithEmailAndPassword(

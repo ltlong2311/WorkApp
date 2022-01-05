@@ -31,7 +31,7 @@ const UserDashboard = ({navigation, route}) => {
         console.log('account');
     };
     const TaskList = () => {
-        navigation.navigate('TaskList', {isLead: false});
+        navigation.navigate('UserTaskList', {isLead: false});
     };
     const projectList = () => {
         navigation.navigate('ProjectList', {isLead: false});
