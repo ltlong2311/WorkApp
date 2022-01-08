@@ -47,7 +47,6 @@ const UserTaskList = ({navigation, route}) => {
         const allList = [];
         const openList = [];
         const userID = userInfo._W.id;
-        console.log(userID);
         projectList.forEach((value, key) => {
             if (value.tasks && value.tasks.length > 0) {
                 Array.prototype.push.apply(taskList, value.tasks);
@@ -94,7 +93,7 @@ const UserTaskList = ({navigation, route}) => {
     const _keyExtractor = (item, index) => item.id;
     const _renderItem = ({item}) => (
         <TouchableOpacity
-            onPress={() => navigation.navigate('TaskView', {task: item})}>
+            onPress={() => navigation.navigate('UserTaskView', {task: item})}>
             <View style={styles.cardView}>
                 <CardView
                     style={styles.cardData}
@@ -120,8 +119,7 @@ const UserTaskList = ({navigation, route}) => {
             <HeaderComponent
                 back="true"
                 title="Task List"
-                next="AddTask"
-                goBack="Dashboard"
+                goBack="UserDashboard"
                 navigation={navigation}
             />
             <View style={styles.tabView}>

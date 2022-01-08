@@ -28,6 +28,8 @@ import LoginAdminPage from './src/screens/loginAdmin';
 import UserDashboard from './src/screens/userDashboard';
 import TaskAssign from './src/screens/taskAssgin';
 import UserTaskList from './src/screens/userTaskList';
+import UserTaskView from './src/screens/userTaskView';
+import UpdateProgress from './src/screens/updateProgress';
 const Stack = createStackNavigator();
 
 const App = () => {
@@ -47,7 +49,9 @@ const App = () => {
                 <Stack.Screen name="TaskList" component={TaskList} />
                 <Stack.Screen name="UserTaskList" component={UserTaskList} />
                 <Stack.Screen name="TaskView" component={TaskView} />
+                <Stack.Screen name="UserTaskView" component={UserTaskView} />
                 <Stack.Screen name="TaskAssign" component={TaskAssign} />
+                <Stack.Screen name="UpdateProgress" component={UpdateProgress} />
                 <Stack.Screen name="EditProject" component={EditProject} />
                 <Stack.Screen name="CreateProject" component={CreateProject} />
                 <Stack.Screen name="projectTask" component={ProjectTask} />
